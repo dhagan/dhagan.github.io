@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Create wpts.gpx</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      html, body
+      {
+   		margin-left: 100px;
+      }
+
+      #map-canvas {
+        width:  640px;
+        height: 480px;
+      }
+
+
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/FileSaver.js"></script>
+    <script>
+  var markers = new Array();
+  /*
+   * Use bindTo to allow dynamic drag of markers to refresh poly.
+   */
+  
+  function MVCArrayBinder(mvcArray){
+    this.array_ = mvcArray;
+  }
+  MVCArrayBinder.prototype = new google.maps.MVCObject();
+  MVCArrayBinder.prototype.get = function(key) {
+    if (!isNaN(parseInt(key))){
+      return this.array_.getAt(parseInt(key));
+    } else {
+      this.array_.get(key);
+    }
+  }
+  MVCArrayBinder.prototype.set = function(key, val) {
+    if (!isNaN(parseInt(key))){
+      this.array_.setAt(parseInt(key), val);
+    } else {
+      this.array_.set(key, val);
+    }
+  }
+ 
+  
+  var poly;
+  var map;
+  var initialLocation;
+  var browserSupportFlag =  new Boolean();
+
+  function initialize() {
+    var chicago = new google.maps.LatLng(30, -156);
+    var myOptions = {
+      zoom: 7,
+      center: chicago,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    map = new google.maps.Map(document.getElementById('map-canvas'), myOptions);
+
+    var polyOptions = {
+      strokeColor: '#FF0000',
+      strokeOpacity: 1.0,
+      strokeWeight: 3, map: map
+    }
+    
+    poly = new google.maps.Polyline(polyOptions);
+    poly.binder = new MVCArrayBinder(poly.getPath());
+    
+    // Add a listener for the click event
+    google.maps.event.addListener(map, 'click', addLatLng);
+  }
+
+  /**
+   * Handles click events on a map, and adds a new point to the Polyline.
+   * @param {MouseEvent} mouseEvent
+   */
+  function addLatLng(event) {
+    var path = poly.getPath();
+    path.push(event.latLng);
+    var len = path.getLength();
+    var marker = new google.maps.Marker({
+      position: event.latLng,
+      title: '#' + len,
+      map: map,
+      draggable : true
+    });
+    markers.push(marker);
+    marker.bindTo('position', poly.binder, (len-1).toString());
+  }
+
+function findMe() {
+  if(navigator.geolocation) {
+    browserSupportFlag = true;
+    navigator.geolocation.getCurrentPosition(function(position) {
+      initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+      map.setCenter(initialLocation);
+    }, function() {
+      handleNoGeolocation(browserSupportFlag);
+    });
+  }
+  // Browser doesn't support Geolocation
+  else {
+    browserSupportFlag = false;
+    handleNoGeolocation(browserSupportFlag);
+  }
+}
+  
+  function handleNoGeolocation(errorFlag) {
+    if (errorFlag == true) {
+      alert("Geolocation service failed.");
+      initialLocation = newyork;
+    } else {
+      alert("Your browser doesn't support geolocation. We've placed you in Siberia.");
+      initialLocation = siberia;
+    }
+    map.setCenter(initialLocation);
+  }
+
+
+  google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+
+    <script>
+$(function(view) {
+"use strict";
+
+var GPX_GPX_OPEN = "<gpx version=\"1.0\" creator=\"Velocitek - http://www.velocitek.com\" d1p1:schemaLocation=\"http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd\" xmlns:d1p1=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://www.topografix.com/GPX/1/0\">\n";
+var GPX_GPX_CLOSE = "</gpx>\n";
+var GPX_TRK_OPEN = "<trk>";
+var GPX_TRK_CLOSE = "</trk>\n";
+var GPX_TRKSEG_OPEN = "<trkseg>";
+var GPX_TRKSEG_CLOSE = "</trkseg>\n";
+var GPX_WPT_OPEN = "<wpt";
+var GPX_WPT_CLOSE = "</wpt>\n";
+var GPX_TIME_OPEN = "<time>\n";
+var GPX_TIME_CLOSE = "</time>\n";
+
+
+function getGPX() {
+	var gpx = GPX_GPX_OPEN;
+	for (var i = 0; i < markers.length; i++) {
+		gpx += GPX_WPT_OPEN;
+		var position = markers[i].getPosition();
+		gpx += "lat=\"" + position.lat()  + "\" lon=\"" + position.lng() + "\">";
+		gpx += GPX_WPT_CLOSE
+	};
+	gpx += GPX_GPX_CLOSE;
+
+	return gpx;
+}
+
+// The canvas drawing portion of the demo is based off the demo at
+// http://www.williammalone.com/articles/create-html5-canvas-javascript-drawing-app/
+$( "#text-options" ).submit(function( event ) {
+  	event.preventDefault();
+	  if ( markers.length == 0) {
+	  	alert( "Please click to add markers" );
+	  } else {
+	  var blob = new Blob([getGPX()], {type: "text/plain;charset=utf-8"});
+	 	saveAs(blob, "waypt.gpx");
+	 }
+});
+
+// text_options_form.addEventListener("submit", function(event) {
+// 	event.preventDefault();
+// 	var BB = get_blob();
+// 	saveAs(
+// 		  new BB(
+// 			  [text.value || text.placeholder]
+// 			, {type: "text/plain;charset=" + document.characterSet}
+// 		)
+// 		, (text_filename.value || text_filename.placeholder) + ".txt"
+// 	);
+// 	var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
+// 	saveAs(blob, "hello world.txt");
+
+// }, false);
+
+});
+    </script>
+
+  </head>
+  <body>
+  	
+  		<h4>Create Waypoints GPX</h4>
+	  	<p>Click to create waypoints and create a route.  Drag waypoint markers to adjust.</p>
+	 
+	    <div id="map-canvas"></div>
+
+		<div>
+			<br>
+			<br>
+			<input type="button" value="Find Me" onClick="findMe();"/>
+		
+			
+			<h4>Save GPX</h4>
+			<form id="text-options">
+				<input type="submit" value="Save" />
+			</form>
+			<p>
+			disable save button until a waypoint has been entered <br>
+			disable findMe() if navigator not available<br>
+			delete waypoint? <br>
+			‘titles’ other than #N on waypoints <br>
+			info window so waypoints can be named <br>
+			validate gpx <br>
+			“here” button to center map <br>
+			</p>
+		</div>
+  </body>
+</html>
