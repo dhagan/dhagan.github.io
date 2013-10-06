@@ -206,8 +206,18 @@ GPXParser.prototype.centerAndZoom = function(trackSegment) {
             var lon = parseFloat(trackpoints[i].getAttribute("lon"));
             var lat = parseFloat(trackpoints[i].getAttribute("lat"));
 
-            // DJH 
-            track.push(new Array( lat, lon));
+            // DJH
+            var numBoats = 50;
+            var boatPosition = new Array();
+            // track[timesStepIndex][boatIndex][0:position.x, 1:position.y];
+            for (var j=0; j< numBoats; j++) {
+                if (j==0) {
+                    boatPosition.push(new Array( lat, lon));
+                } else {
+                    boatPosition.push(new Array( lat + Math.random() * 0.05, lon + Math.random() *0.05));
+                }
+            }
+            track.push(boatPosition);
 
             if(lon < minlon) minlon = lon;
             if(lon > maxlon) maxlon = lon;

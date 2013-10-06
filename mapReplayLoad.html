@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <!-- Load the Paper.js library -->
+    <script type="text/javascript" src="js/paper.js"></script>
+    <script type="text/javascript" src="js/loadgpx.js"></script>
+    <script type="text/javascript" src="js/FileSaver.js"></script>
+
+    <script>
+        function initialize() {
+            var maui = new google.maps.LatLng(20, -156);
+            var myOptions = {
+                zoom: 7,
+                center: maui,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            map = new google.maps.Map(document.getElementById('map-canvas'), myOptions);
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+        <!-- Define inlined PaperScript associate it with myCanvas -->
+        <script type="text/paperscript" src="js/mapReplayLoad.js" canvas="myCanvas"></script>
+
+
+</head>
+<body>
+<div id="map-canvas" style="position:absolute;top:0;left:0;width:640px;height:480px"></div>
+<canvas id="myCanvas" style="position:absolute;top:0;left:0;width:640px;height:480px"></canvas>
+<div id="sliderOpacity" style="position:relative;top:440px;left:0px;width:630px"></div>
+<div style="position:relative;top:500px;left:0px">
+    <h4>Upload and plot GPX</h4>
+    <input type="file" id="file" name="file">
+
+<h4>Save GPX</h4>
+<form id="text-options">
+    <input type="submit" value="Save" />
+</form>
+</div>
+</body>
+</html>
