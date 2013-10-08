@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
+    <link href="css/mapOverlay.css" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script type="text/javascript" src="js/loadgpx.js"></script>
+    <script src="js/raphaelboth.js"></script>
+    <script src="js/raceoverlay.js"></script>
+    <script src="js/mapRaphael.js"></script>
+    <script>
+        // global scope; todo change this to jqueryUI anyway
+        var overlay;
+        $(function() {
+            $( "#sliderOpacity" ).slider({
+                value:0.0,
+                step: 1.0,
+                min:0,
+                max:11500,
+                slide: function( event, ui ) {
+                    //console.log(ui.value);
+                    overlay.setIndex(ui.value);
+                },
+                stop: function( event, ui ) {
+                }
+            }).attr("title", "Opacity Control");
+            // $('.ui-slider-handle').height(50);
+        });
+    </script>
+</head>
+<body>
+<div id ="panel">
+    <input type="button" value="<<" onclick="overlay.rewind();"></input>
+    <input type="button" value=">>" onclick="overlay.forward();"></input>
+    <div id="sliderOpacity" style="width: 500px"></div>
+</div>
+<div id="map-canvas"></div>
+</body>
+</html>
