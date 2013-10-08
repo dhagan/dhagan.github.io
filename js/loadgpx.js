@@ -202,12 +202,21 @@ GPXParser.prototype.centerAndZoom = function(trackSegment) {
             maxlon = parseFloat(trackpoints[0].getAttribute("lon"));
         }
 
+        var boatPositionDelta = [];
+        var numBoats = 50;
+        for (var j=0; j< numBoats; j++) {
+            if (j==0) {
+                boatPositionDelta.push(new Array( 0, 0));
+            } else {
+                boatPositionDelta.push(new Array(Math.random() * 0.05, Math.random() *0.05));
+            }
+        }
+
         for(var i = 0; i < trackpoints.length; i++) {
             var lon = parseFloat(trackpoints[i].getAttribute("lon"));
             var lat = parseFloat(trackpoints[i].getAttribute("lat"));
 
             // DJH
-            var numBoats = 50;
             var boatPosition = new Array();
             // track[timesStepIndex][boatIndex][0:position.x, 1:position.y];
             for (var j=0; j< numBoats; j++) {
@@ -215,6 +224,7 @@ GPXParser.prototype.centerAndZoom = function(trackSegment) {
                     boatPosition.push(new Array( lat, lon));
                 } else {
                     boatPosition.push(new Array( lat + Math.random() * 0.05, lon + Math.random() *0.05));
+                    //boatPosition.push(new Array( lat + boatPositionDelta[j][0], lon + boatPositionDelta[j][1]));
                 }
             }
             track.push(boatPosition);
