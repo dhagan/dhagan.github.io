@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/ui-darkness/jquery-ui.css"/>
     <link href="css/mapoverlay.css" rel="stylesheet">
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -29,11 +29,99 @@
             // $('.ui-slider-handle').height(50);
         });
     </script>
+    <script>
+        $(function() {
+            $( "#beginning" ).button({
+                text: false,
+                icons: {
+                    primary: "ui-icon-seek-start"
+                }
+            });
+            $( "#rewind" ).button({
+                text: false,
+                icons: {
+                    primary: "ui-icon-seek-prev"
+                }
+            });
+            $( "#play" ).button({
+                text: false,
+                icons: {
+                    primary: "ui-icon-play"
+                }
+            })
+                    .click(function() {
+                        var options;
+                        if ( $( this ).text() === "play" ) {
+                            options = {
+                                label: "pause",
+                                icons: {
+                                    primary: "ui-icon-pause"
+                                }
+                            };
+                            overlay.pause();
+                        } else {
+                            options = {
+                                label: "play",
+                                icons: {
+                                    primary: "ui-icon-play"
+                                }
+                            };
+                            overlay.forward();
+                        }
+                        $( this ).button( "option", options );
+                    });
+            $( "#stop" ).button({
+                text: false,
+                icons: {
+                    primary: "ui-icon-stop"
+                }
+            })
+                    .click(function() {
+                        $( "#play" ).button( "option", {
+                            label: "play",
+                            icons: {
+                                primary: "ui-icon-play"
+                            }
+                        });
+                        overlay.pause();
+                    });
+            $( "#forward" ).button({
+                text: false,
+                icons: {
+                    primary: "ui-icon-seek-next"
+                }
+            });
+            $( "#end" ).button({
+                text: false,
+                icons: {
+                    primary: "ui-icon-seek-end"
+                }
+            });
+            $( "#shuffle" ).button();
+            $( "#repeat" ).buttonset();
+        });
+    </script>
 </head>
 <body>
 <div id ="panel">
-    <input type="button" value="<<" onclick="overlay.rewind();"></input>
-    <input type="button" value=">>" onclick="overlay.forward();"></input>
+    <div id="toolbar" class="ui-widget-header ui-corner-all">
+        <button id="beginning">go to beginning</button>
+        <button id="rewind">rewind</button>
+        <button id="play">play</button>
+        <button id="stop">stop</button>
+        <button id="forward">fast forward</button>
+        <button id="end">go to end</button>
+
+        <!--
+        <input type="checkbox" id="shuffle" /><label for="shuffle">Shuffle</label>
+
+  <span id="repeat">
+    <input type="radio" id="repeat0" name="repeat" checked="checked" /><label for="repeat0">No Repeat</label>
+    <input type="radio" id="repeat1" name="repeat" /><label for="repeat1">Once</label>
+    <input type="radio" id="repeatall" name="repeat" /><label for="repeatall">All</label>
+  </span>
+  -->
+    </div>
     <div id="sliderOpacity" style="width: 500px"></div>
 </div>
 <div id="map-canvas"></div>

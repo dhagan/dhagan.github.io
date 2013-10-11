@@ -223,8 +223,8 @@ GPXParser.prototype.centerAndZoom = function(trackSegment) {
                 if (j==0) {
                     boatPosition.push(new Array( lat, lon));
                 } else {
-                    boatPosition.push(new Array( lat + Math.random() * 0.05, lon + Math.random() *0.05));
-                    //boatPosition.push(new Array( lat + boatPositionDelta[j][0], lon + boatPositionDelta[j][1]));
+                   // boatPosition.push(new Array( lat + Math.random() * 0.05, lon + Math.random() *0.05));
+                    boatPosition.push(new Array( lat + boatPositionDelta[j][0], lon + boatPositionDelta[j][1]));
                 }
             }
             track.push(boatPosition);
