@@ -1,0 +1,60 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Maliko Playback</title>
+
+    <link href='css/style.css' rel='stylesheet' type='text/css' />
+</head>
+<body>
+<div id="wrapper">
+    <div id="mapwrapper">
+        <div id="map"></div>
+        <div id="dropalert">
+            <div id="dropalert-wrap">
+                <h1 >Drag &amp; drop your gpx here to show it on map.</h1>
+                <p>
+                    Supported gpx elements: tracks, routes, waypoints.
+                </p>
+                <p>
+                    Don't worry, your gpx tracks are processed in your browser and aren't uploaded anywhere -
+                    Google only provides the maps.
+                    Drag another gpx to replace the previous one.
+                    So far works this just in Chrome and Firefox browsers.
+                </p>
+            </div>
+        </div>
+        <a id="promo" href="http://www.jugger.com">
+        </a>
+       <div id="profileborder" style="width: 80%;">
+            <div id="profilegraph">
+            <div class="placeholder">Speed chart will appear here.</div>
+            </div>
+           <div id ="panel" style="width: 80%; background: red; height: 100px; z-index: 100">
+               <div id="toolbar" class="ui-widget-header ui-corner-all">
+                   <button id="beginning">go to beginning</button>
+                   <button id="rewind">rewind</button>
+                   <button id="play">play</button>
+                   <button id="stop">stop</button>
+                   <button id="forward">fast forward</button>
+                   <button id="end">go to end</button>
+               </div>
+           </div>
+        </div>
+
+    </div>
+
+</div>
+<!-- Replace the key in the line below with an API key for your site.  You can get one here http://www.google.com/apis/maps/signup.html -->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=geometry"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.initDrop.js"></script>
+<script type="text/javascript" src="js/functional/functional.min.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript" src="js/Highcharts-3.0.7/js/highcharts.js"></script>
+<script type="text/javascript" src="js/func.js"></script>
+<script type="text/javascript" src="js/gpxtools/color.js"></script>
+<script type="text/javascript" src="js/gpxtools/gpxtools.js"></script>
+<script type="text/javascript" src="js/gpxtools/profilevis.js"></script>
+</body>
+</html>
