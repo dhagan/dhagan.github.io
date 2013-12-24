@@ -1,7 +1,9 @@
-var ajaxTestURL; // = 'eight_ball_150.gpx'; //'eight_ball_150.gpx'
+var ajaxTestURL; // = 'eight_ball.gpx'; //'eight_ball_150.gpx'
 var draw_profile = false;
 
 
+// jQuery removeClass removes the css class
+// http://api.jquery.com/removeClass/
 function set_feature(bool, id, callback) {
     var el = $('#' + id);
     if (bool) {
@@ -17,8 +19,8 @@ function set_feature(bool, id, callback) {
 function ajax_parse_gpx(parser, updateLayout, droppedFileContent, map) {
     var profilevis;
 
-   // $('#dropalert').remove();
-    //document.title = 'GPX: ' + filename;
+    // $('#dropalert').remove();
+    //document.title = 'Maliko Replay: ' + filename;
 
     var gpxData = parser.ParseGpx(droppedFileContent);
 
@@ -31,6 +33,11 @@ function ajax_parse_gpx(parser, updateLayout, droppedFileContent, map) {
     // and update containers
     set_feature(draw_profile, 'profilegraph', function (el) {
         profilevis = new ProfileVisualizer(el);
+        if (draw_profile) {
+            $('#promo').css("display","block");
+            $('#statuswell').css("display","block");
+            $('#profilebackground').css("display","block");
+        }
     });
     updateLayout();
 
@@ -64,7 +71,7 @@ $(document).ready(function () {
     var profilevis;
 
     if (ajaxTestURL) {
-       $.ajax({ type: "GET",
+        $.ajax({ type: "GET",
             url: ajaxTestURL,
             async: false,
             success: function (text) {
@@ -75,8 +82,7 @@ $(document).ready(function () {
     } else {
         $('body').initDrop(function (droppedFileContent, filename) {
             $('#dropalert').remove();
-
-            document.title = 'GPX: ' + filename;
+            document.title = 'Maliko Replay: ' + filename;
 
             var gpxData = parser.ParseGpx(droppedFileContent);
 
@@ -89,6 +95,11 @@ $(document).ready(function () {
             // and update containers
             set_feature(draw_profile, 'profilegraph', function (el) {
                 profilevis = new ProfileVisualizer(el);
+                if (draw_profile) {
+                    $('#promo').css("display","block");
+                    $('#statuswell').css("display","block");
+                    $('#profilebackground').css("display","block");
+                }
             });
             updateLayout();
 
@@ -141,16 +152,16 @@ function createParser(map, speedramp) {
                 return colorFromRamp(speedramp, p2.spd);
                 break;
             case 'slope':
-                /*
-                if (p2.elediff != p2.elediff
-                    || p2.dst != p2.dst
-                    ) { // aka not a number
-                    return '#FF00FF';
-                }
-                var angle = Math.atan2(p2.elediff, p2.dst * 1000) * 180 / Math.PI; // <-180 - 180>
-                return colorFromRamp(sloperamp, angle);
-                break;
-                */
+            /*
+             if (p2.elediff != p2.elediff
+             || p2.dst != p2.dst
+             ) { // aka not a number
+             return '#FF00FF';
+             }
+             var angle = Math.atan2(p2.elediff, p2.dst * 1000) * 180 / Math.PI; // <-180 - 180>
+             return colorFromRamp(sloperamp, angle);
+             break;
+             */
             default:
                 return '#FF00FF';
                 break;

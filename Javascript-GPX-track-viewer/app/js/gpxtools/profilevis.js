@@ -66,7 +66,7 @@ ProfileVisualizer.prototype.drawGpx = function (gpxdata, map) {
 
     var marker = new google.maps.Marker({
         //position: new google.maps.LatLng(first[0], first[1]),
-        title:"Start",
+        title: "Start",
         icon: circle,
         map: map,
         zIndex: 10
@@ -82,7 +82,7 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
         chart: {
             renderTo: this.jqelement.attr('id'),
             type: 'spline',
-            backgroundColor:'rgba(255, 255, 255, 0.8)'
+            backgroundColor: 'rgba(255, 255, 255, 0.0)'
         },
         title: {
             text: ''
@@ -98,7 +98,7 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
                 //DKH this seems to be broken -- align: middle,
                 text: 'Time (hh:mm)',
                 style: {
-                    left:0
+                    left: 0
                 }
             },
             type: 'datetime',
@@ -106,51 +106,57 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
                 month: '%e. %b',
                 year: '%b'
             },
-            plotBands: [{
-                from: 59000,
-                to: 61000,
-                color: 'rgba(255, 255, 255, 0.3)',
-                zIndex: 1
-            }, {
-                    from: 119000,
-                    to: 121000,
-                    color: 'rgba(255, 255, 255, 0.3)',
+            plotBands: [
+                {
+                    value: 60000,
+                    width: 2.5,
+                    color: 'rgba(255, 255, 255, 0.8)',
                     zIndex: 1
-            }, {
-                from: 179000,
-                to: 181000,
-                color: 'rgba(255, 255, 255, 0.3)',
-                zIndex: 1
-            }, {
-                from: 229000,
-                to: 241000,
-                color: 'rgba(255, 255, 255, 0.3)',
-                zIndex: 1
-            }, {
-                from: 299000,
-                to: 301000,
-                color: 'rgba(255, 255, 255, 0.3)',
-                zIndex: 1
-            }]
+                },
+                {
+                    value: 120000,
+                    width: 2.5,
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    zIndex: 1
+                },
+                {
+                    value: 180000,
+                    width: 2.5,
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    zIndex: 1
+                },
+                {
+                    value: 240000,
+                    width: 2.5,
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    zIndex: 1
+                },
+                {
+                    value: 300000,
+                    width: 2.5,
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    zIndex: 1
+                }
+            ]
             /*
-            plotLines : [{
-                value : 30000,
-                color : 'green',
-                dashStyle : 'shortdash',
-                width : 2,
-                label : {
-                    text : 'Last quarter minimum'
-                }
-            }, {
-                value : 40000,
-                color : 'red',
-                dashStyle : 'shortdash',
-                width : 2,
-                label : {
-                    text : 'Last quarter maximum'
-                }
-            }]
-            */
+             plotLines : [{
+             value : 30000,
+             color : 'green',
+             dashStyle : 'shortdash',
+             width : 2,
+             label : {
+             text : 'Last quarter minimum'
+             }
+             }, {
+             value : 40000,
+             color : 'red',
+             dashStyle : 'shortdash',
+             width : 2,
+             label : {
+             text : 'Last quarter maximum'
+             }
+             }]
+             */
         },
         yAxis: {
             title: {
@@ -160,64 +166,86 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
             minorGridLineWidth: 0,
             gridLineWidth: 0,
 
-            plotBands: [{
-                from: 0,
-                to: 4,
-                color: 'rgba(168, 168, 168, 0.5)'
-            }, {
-                from: 4,
-                to: 5,
-                color: 'rgba(255, 255, 255, 0.3)'
-            }, {
-                from: 5,
-                to:9 ,
-                color: 'rgba(184, 184, 184, 0.5)'
+            plotBands: [
+                {
+                    from: 0,
+                    to:0.5,
+                    color: 'rgba(255, 255, 255, 0.8)'
+                },
+                {
+                    from: 0.5,
+                    to: 4.75,
+                    color: 'rgba(168, 168, 168, 1.0)'
+                },
+                {
+                    from: 4.75,
+                    to: 5.25,
+                    color: 'rgba(255, 255, 255, 0.8)'
+                },
+                {
+                    from: 5.25,
+                    to: 10.0,
+                    color: 'rgba(184, 184, 184, 1.0)'
 
-            }, {
-                from: 9,
-                to: 10,
-                color: 'rgba(0, 0, 0, 0)'
-            }, {
-                from: 10,
-                to: 14,
-                color: 'rgba(200, 200, 200, 0.5)'
+                },
+                {
+                    from: 10.0,
+                    to: 10.25,
+                    color: 'rgba(255, 255, 255, 0.8)'
+                },
+                {
+                    from: 10.25,
+                    to: 14.75,
+                    color: 'rgba(200, 200, 200, 1.0)'
 
-            }, {
-                from: 14,
-                to: 15,
-                color: 'rgba(0, 0, 0, 0)'
-            }, {
-                from: 15,
-                to: 19,
-                color: 'rgba(216, 216, 316, 0.5)'
-            }, {
-                from: 19,
-                to: 20,
-                color: 'rgba(0, 0, 0, 0)'
-            }, {
-                    from: 20 ,
-                    to: 24,
-                    color: 'rgba(200, 200, 200, 0.5)'
+                },
+                {
+                    from: 14.75,
+                    to: 15.25,
+                    color: 'rgba(255, 255, 255, 0.8)'
+                },
+                {
+                    from: 15.25,
+                    to: 19.75,
+                    color: 'rgba(216, 216, 216, 1.0)'
+                },
+                {
+                    from: 19.75,
+                    to: 20.25,
+                    color: 'rgba(255, 255, 255, 0.8)'
+                },
+                {
+                    from: 20.25,
+                    to: 24.75,
+                    color: 'rgba(200, 200, 200, 1.0)'
 
-                }, {
-                    from: 24,
-                    to: 25,
-                    color: 'rgba(0, 0, 0, 0)'
-                }, {
-                    from: 25,
-                    to: 29,
-                    color: 'rgba(216, 216, 316, 0.5)'
-            }]
+                },
+                {
+                    from: 24.75,
+                    to: 25.25,
+                    color: 'rgba(255, 255, 255, 0.8)'
+                },
+                {
+                    from: 25.25,
+                    to: 29.75,
+                    color: 'rgba(216, 216, 316, 1.0)'
+                }
+            ]
             //,min: 0
         },
         tooltip: {
             crosshairs: true,
+            shared: false,
+            useHTML: true,
+            borderWidth: 0,
+            shadow: false,
+            backgroundColor: 'rgba(255,255,255,0)',
+            useHTML: true,
             formatter: function () {
-                // DJH I tried index, id
-                var tooltip = "<b>Speed: " + parseFloat(this.y).toFixed(2) + " mph</b><br>";
-                tooltip += "<b>Time: " + Highcharts.dateFormat('%H:%M:%S', this.x) + "</b>";
-                //+ this.y + ' m ' + this.point.lat + ' ' + this.point.lon;
-                return tooltip;
+               var speed =  "<b>SPEED: </b>" + parseFloat(this.y).toFixed(2) + " mph";
+               var time =   "<b>&nbsp;&nbsp;TIME: </b>" + Highcharts.dateFormat('%H:%M:%S', this.x);
+               var tooltip =  '<div class="myTooltip" style="background-color:' + this.series.color + ';">' + speed + '<br/>' + time + '</div>';
+               return tooltip;
             }
         },
         plotOptions: {
@@ -230,9 +258,9 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
                 },
                 marker: {
                     enabled: false,
-                    radius: 8,
+                    radius: 5,
                     lineColor: 'white',
-                    lineWidth: 3
+                    lineWidth: 1
                 } //,
                 //pointInterval: 3600000, // one hour
                 //pointStart: Date.UTC(2009, 9, 6, 0, 0, 0)
@@ -240,25 +268,24 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
             series: {
                 point: {
                     events: {
-                        mouseOver: function() {
+                        mouseOver: function () {
                             // debug
                             console.log(this.x, this.y, this.lat, this.lon);
-                            var _position = new google.maps.LatLng(this.lat,this.lon);
+                            var _position = new google.maps.LatLng(this.lat, this.lon);
 
-                            if (marker)
-                            {
-                                marker.setPosition(new google.maps.LatLng(this.lat,this.lon));
+                            if (marker) {
+                                marker.setPosition(new google.maps.LatLng(this.lat, this.lon));
                                 marker.setTitle(this.lon.currentPosition);
                             }
                         },
-                        mouseOut: function() {
+                        mouseOut: function () {
                             // debug console.log('mouseOut - point');
                             // TODO remove marker?
                         }
                     }
                 },
                 events: {
-                    mouseOut: function() {
+                    mouseOut: function () {
                         // debug console.log('mouseOut - chart');
                         //hoverMarker.setVisible(false);
                         // TODO remove marker?

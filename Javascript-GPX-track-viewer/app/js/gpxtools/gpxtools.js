@@ -185,7 +185,7 @@ GPXParser.prototype._parseRoutePoint = function (routepoint) {
 
     pnt.lat = parseFloat(routepoint.getAttribute('lat'));
     pnt.lon = parseFloat(routepoint.getAttribute('lon'));
-    pnt.latlng = new  google.maps.LatLng(pnt.lat, pnt.lon);
+    pnt.latlng = new google.maps.LatLng(pnt.lat, pnt.lon);
 
     var names = routepoint.getElementsByTagName("name");
     if (names[0] !== undefined) {

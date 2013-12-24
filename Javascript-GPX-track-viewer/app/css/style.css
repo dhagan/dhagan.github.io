@@ -1,72 +1,120 @@
 html,
-body
-{
-	width: 100%;
-	height: 100%;
+body {
+    width: 100%;
+    height: 100%;
 }
 
-#wrapper
-{
-	height: 100%;
-	position: relative;
+#wrapper {
+    height: 100%;
+    position: relative;
 }
 
 .dropfocus {
-	background: greenyellow;
+    background: greenyellow;
 }
 
 #mapwrapper {
-	position: relative;
-	width: 100%;
-	height: 100%;
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
+
 #map {
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
-/* SLOPE */
-
-#slopevis {
-	display: none;
-}
-body.slopevis #slopevis {
-	display: block;
-
-	position: absolute;
-	top: 0;
-	right: 0;
-
-	width: 250px;
-	height: 100%;
-
-	background: #eee;
-}
-body.slopevis #wrapper {
-	padding-right: 250px;
-}
 
 /* PROFILE */
 #profilegraph {
-	/*display: none;*/
+    /*display: none;*/
+    background-color: transparent;
 }
 
-
 #statuswell {
-    display: block;
+    display: none;
 
     position: absolute;
-    bottom: 160px;
+    bottom: 180px;
 
-    height: 40px;
+    border-radius: 8px;
+
+    height: 40px; /* cheat */
     left: 100px;
     right: 40px;
+    background-color: #ffffff;
 
-    background: rgba(256, 256, 256, 1.0);
+}
+
+.child {
+    /* border: 1px red solid; */
+    height: 40px;
+    display:inline-block;
+    font-family:'Open Sans', sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+}
+.classleft {
+    border-left: 1px solid #808080;
+    border-top: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+    border-radius: 8px 0px 0px 8px;
+    background-color: #808080;
+    color: #ffffff;
+    /* http://css-tricks.com/fighting-the-space-between-inline-block-elements/ */
+    margin-right: -4px;
+}
+.classmiddle {
+    border-left: 1px solid #ffffff;
+    border-top: 1px solid #ffffff;
+    border-bottom: 1px solid #ffffff;
+    border-radius: 0px;
+    background-color: #ffffff;
+    color: #000000;
+    /* http://css-tricks.com/fighting-the-space-between-inline-block-elements/ */
+    margin-right: -4px;
+}
+.classright {
+    border-left: 1px solid #ffffff;
+    border-top: 1px solid #ffffff;
+    border-bottom: 1px solid #ffffff;
+    border-radius: 0px 8px 8px 0px;
+    color: #000000;
+    background-color: #ffffff;
+}
+.grandchild {
+    /*border: 1px red solid;*/
+    height: 40px;
+    display: flex;
+    /* http://stackoverflow.com/questions/5166574/vertical-align-text-in-block-element */
+    align-items: center;
+    font-color: #ffffff;
+    margin-left: 20px;
+}
+.grandchild20 {
+    /*border: 1px red solid;*/
+    height: 40px;
+    display: flex;
+    /* http://stackoverflow.com/questions/5166574/vertical-align-text-in-block-element */
+    align-items: center;
+    color: #808080;
+    margin-left: 20px;
+}
+.grandchild10 {
+    /*border: 1px red solid;*/
+    height: 40px;
+    display: flex;
+    /* http://stackoverflow.com/questions/5166574/vertical-align-text-in-block-element */
+    align-items: center;
+    font-color: #ffffff;
+    margin-left: 10px;
+}
+.grandchildleft {
+    margin-left: 50px;
 }
 
 #profilebackground {
-    display: block;
+    display: none;
 
     position: absolute;
     bottom: 0px;
@@ -78,117 +126,116 @@ body.slopevis #wrapper {
 }
 
 body.profilegraph #profilegraph {
-	display: block;
+    display: block;
 
-	position: absolute;
-	bottom: 10px;
+    position: absolute;
+    bottom: 10px;
     /** DJH this doesn't work
     margin-left: auto;
     margin-right: auto;
     */
     left: 40px;
     right: 40px;
-	height: 150px;
+    height: 150px;
     /*
 	width: 100%;
 	*/
 
-	background: rgba(256, 256, 256, 0.5);
+    background: rgba(256, 256, 256, 0.5);
 }
 
 body.profilegraph #wrapper {
 }
 
 #dropalert {
-	width: 60%;
-	
-	position: absolute;
-	top: 35%;
-	left: 20%;
+    width: 60%;
 
-	text-align: center;
-	background: #fff;
-	/* border: 1px solid #808080; */
+    position: absolute;
+    top: 35%;
+    left: 20%;
 
-	-moz-box-shadow: 0 0 4px rgba(0,0,0,0.25);
-	-webkit-box-shadow: 0 0 4px rgba(0,0,0,0.25);
-	box-shadow: 0 0 4px rgba(0,0,0,0.25);
+    text-align: center;
+    background: #fff;
+    /* border: 1px solid #808080; */
+
+    -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
 }
+
 .dropfocus #dropalert {
-	background: #f4f4f4;
-	-moz-box-shadow: 0 0 4px rgba(0,0,0,0.5);
-	-webkit-box-shadow: 0 0 4px rgba(0,0,0,0.5);
-	box-shadow: 0 0 4px rgba(0,0,0,0.5);
+    background: #f4f4f4;
+    -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }
+
 #dropalert #dropalert-wrap {
-	margin: 2em 4em;
+    margin: 2em 4em;
 }
 
 /* PROMO */
 
 #promo {
-	position: absolute;
-	bottom: 0;
-	right: 0;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 
-	display: block;
+    display: none;
 
-	background: #f0f0f0;
-	color: #666;
+    background: #f0f0f0;
+    color: #666;
 
-	/*
-	border-top: 1px solid #888;
-	border-left: 1px solid #888;
-	*/
+    /*
+    border-top: 1px solid #888;
+    border-left: 1px solid #888;
+    */
 
-	padding: 0 6px 6px 6px;
+    padding: 0 6px 6px 6px;
 
-	text-decoration:  none;
-	text-align: right;
-	line-height: 1.4em;
+    text-decoration: none;
+    text-align: right;
+    line-height: 1.4em;
 
-	-moz-box-shadow: 0 0 4px rgba(0,0,0,0.25);
-	-webkit-box-shadow: 0 0 4px rgba(0,0,0,0.25);
-	box-shadow: 0 0 4px rgba(0,0,0,0.25);
+    -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
 }
 
 #promo:hover {
-	background: #fff;
-	color: #000;
+    background: #fff;
+    color: #000;
 
-	-moz-box-shadow: 0 0 4px rgba(0,0,0,0.5);
-	-webkit-box-shadow: 0 0 4px rgba(0,0,0,0.5);
-	box-shadow: 0 0 4px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }
 
 #promo h2,
-#promo h2.alt
-{
-	color: #666;
-	margin: 0;
-	line-height: 1.4em;
-	font-weight: bold;
-	font-size: 180%;
+#promo h2.alt {
+    color: #666;
+    margin: 0;
+    line-height: 1.4em;
+    font-weight: bold;
+    font-size: 180%;
 }
 
-#promo h2 .small
-{
-	opacity: 0.5;
+#promo h2 .small {
+    opacity: 0.5;
 }
 
-#promo:hover h2.alt
-{
-	color: #000;
+#promo:hover h2.alt {
+    color: #000;
 }
 
 #promo p {
-	margin: 0;
-	font-size: 80%;
-	line-height: 1em;
+    margin: 0;
+    font-size: 80%;
+    line-height: 1em;
 }
 
 #promo .hireme {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 #promo .main-legend {
@@ -201,15 +248,27 @@ body.profilegraph #wrapper {
 
 /* placeholder */
 .placeholder {
-	/*
-	background: none repeat scroll 0 0 #FFFFFF;
+    /*
+    background: none repeat scroll 0 0 #FFFFFF;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
-	*/
+    */
     left: 20%;
     position: absolute;
     text-align: center;
     top: 47%;
     width: 60%;
 
-	color: #888;
+    color: #888;
+}
+
+/** highcharts **/
+
+.myTooltip {
+    -webkit-border-radius: 4px;
+    -khtml-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 0px;
+    padding: 5px 10px 5px 10px;
+    border: 1px #ffffff;
+    color: white;
 }
