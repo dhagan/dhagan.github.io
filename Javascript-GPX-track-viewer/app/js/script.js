@@ -1,4 +1,4 @@
-var ajaxTestUR; // = 'eight_ball_150.gpx'; //'eight_ball_150.gpx'
+var ajaxTestURL; // = 'eight_ball_150.gpx'; //'eight_ball_150.gpx'
 var draw_profile = false;
 
 
