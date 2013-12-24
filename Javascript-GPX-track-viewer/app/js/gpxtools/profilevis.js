@@ -63,7 +63,6 @@ ProfileVisualizer.prototype.drawGpx = function (gpxdata, map) {
         strokeWeight: 3
     };
 
-
     var marker = new google.maps.Marker({
         //position: new google.maps.LatLng(first[0], first[1]),
         title: "Start",
@@ -105,58 +104,7 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
             dateTimeLabelFormats: { // don't display the dummy year
                 month: '%e. %b',
                 year: '%b'
-            },
-            plotBands: [
-                {
-                    value: 60000,
-                    width: 2.5,
-                    color: 'rgba(255, 255, 255, 0.8)',
-                    zIndex: 1
-                },
-                {
-                    value: 120000,
-                    width: 2.5,
-                    color: 'rgba(255, 255, 255, 0.8)',
-                    zIndex: 1
-                },
-                {
-                    value: 180000,
-                    width: 2.5,
-                    color: 'rgba(255, 255, 255, 0.8)',
-                    zIndex: 1
-                },
-                {
-                    value: 240000,
-                    width: 2.5,
-                    color: 'rgba(255, 255, 255, 0.8)',
-                    zIndex: 1
-                },
-                {
-                    value: 300000,
-                    width: 2.5,
-                    color: 'rgba(255, 255, 255, 0.8)',
-                    zIndex: 1
-                }
-            ]
-            /*
-             plotLines : [{
-             value : 30000,
-             color : 'green',
-             dashStyle : 'shortdash',
-             width : 2,
-             label : {
-             text : 'Last quarter minimum'
-             }
-             }, {
-             value : 40000,
-             color : 'red',
-             dashStyle : 'shortdash',
-             width : 2,
-             label : {
-             text : 'Last quarter maximum'
-             }
-             }]
-             */
+            }
         },
         yAxis: {
             title: {
@@ -165,7 +113,7 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
             min: 0,
             minorGridLineWidth: 0,
             gridLineWidth: 0,
-
+/*
             plotBands: [
                 {
                     from: 0,
@@ -231,8 +179,10 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
                     color: 'rgba(216, 216, 316, 1.0)'
                 }
             ]
+            */
             //,min: 0
         },
+
         tooltip: {
             crosshairs: true,
             shared: false,
@@ -301,4 +251,45 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
 
         series: seriesdata
     });
+
+/*    var grey = [
+        'rgba(168, 168, 168, 1.0)',
+        'rgba(184, 184, 184, 1.0)',
+        'rgba(200, 200, 200, 1.0)',
+        'rgba(216, 216, 216, 1.0)'
+    ];*/
+    var grey = [
+        'rgba(158, 158, 158, 1.0)',
+        'rgba(174, 174, 174, 1.0)',
+        'rgba(210, 210, 210, 1.0)',
+        'rgba(232, 232, 232, 1.0)'
+    ];
+    var maxTick = chart.yAxis[0].tickPositions[chart.yAxis[0].tickAmount - 1];
+    for ( var i = 0; i < 8; i++) {
+        var tuple = i/8;
+        var _value =  maxTick * (i / 8);
+        var _color = 'rgba(255, 255, 255, 0.8)';
+        var _width = 2.5;
+        if (i%2) {
+            console.log(i);
+            var _color = grey[(i-1)/2];
+            var _width = 20;
+        }
+        chart.yAxis[0].addPlotLine({
+            value: _value,
+            width: _width,
+            color: _color,
+            zIndex: 1
+        });
+    }
+
+    for ( var i = 0; i < chart.xAxis[0].tickPositions.length; i++) {
+        chart.xAxis[0].addPlotLine({
+            value: chart.xAxis[0].tickPositions[i],
+            width: 2.5,
+            color: 'rgba(255, 255, 255, 0.8)',
+            zIndex: 1
+        });
+    }
+
 }

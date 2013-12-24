@@ -1,4 +1,4 @@
-var ajaxTestURL; // = 'eight_ball.gpx'; //'eight_ball_150.gpx'
+var ajaxTestUR; // = 'eight_ball_150.gpx'; //'eight_ball_150.gpx'
 var draw_profile = false;
 
 
@@ -82,7 +82,7 @@ $(document).ready(function () {
     } else {
         $('body').initDrop(function (droppedFileContent, filename) {
             $('#dropalert').remove();
-            document.title = 'Maliko Replay: ' + filename;
+            document.title = 'Maliko Playback: ' + filename;
 
             var gpxData = parser.ParseGpx(droppedFileContent);
 
