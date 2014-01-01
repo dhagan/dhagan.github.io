@@ -75,6 +75,7 @@ ProfileVisualizer.prototype.drawGpx = function (gpxdata, map) {
 }
 
 ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
+    var _path;
     this.jqelement.html('');
 
     var chart = new Highcharts.Chart({
@@ -98,12 +99,22 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
                 text: 'Time (hh:mm)',
                 style: {
                     left: 0
-                }
+                },
+                //x: 0 // left justify
+                align: 'low'
             },
             type: 'datetime',
             dateTimeLabelFormats: { // don't display the dummy year
                 month: '%e. %b',
                 year: '%b'
+            },
+            // remove gridlines
+            lineWidth: 0,
+            minorGridLineWidth: 0,
+            minorTickLength: 0,
+            tickLength: 0,
+            labels: {
+                y: 20 // move down to accommodate border
             }
         },
         yAxis: {
@@ -111,76 +122,14 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
                 text: 'Speed (mph)'
             },
             min: 0,
+            lineWidth: 0,
             minorGridLineWidth: 0,
             gridLineWidth: 0,
-/*
-            plotBands: [
-                {
-                    from: 0,
-                    to:0.5,
-                    color: 'rgba(255, 255, 255, 0.8)'
-                },
-                {
-                    from: 0.5,
-                    to: 4.75,
-                    color: 'rgba(168, 168, 168, 1.0)'
-                },
-                {
-                    from: 4.75,
-                    to: 5.25,
-                    color: 'rgba(255, 255, 255, 0.8)'
-                },
-                {
-                    from: 5.25,
-                    to: 10.0,
-                    color: 'rgba(184, 184, 184, 1.0)'
-
-                },
-                {
-                    from: 10.0,
-                    to: 10.25,
-                    color: 'rgba(255, 255, 255, 0.8)'
-                },
-                {
-                    from: 10.25,
-                    to: 14.75,
-                    color: 'rgba(200, 200, 200, 1.0)'
-
-                },
-                {
-                    from: 14.75,
-                    to: 15.25,
-                    color: 'rgba(255, 255, 255, 0.8)'
-                },
-                {
-                    from: 15.25,
-                    to: 19.75,
-                    color: 'rgba(216, 216, 216, 1.0)'
-                },
-                {
-                    from: 19.75,
-                    to: 20.25,
-                    color: 'rgba(255, 255, 255, 0.8)'
-                },
-                {
-                    from: 20.25,
-                    to: 24.75,
-                    color: 'rgba(200, 200, 200, 1.0)'
-
-                },
-                {
-                    from: 24.75,
-                    to: 25.25,
-                    color: 'rgba(255, 255, 255, 0.8)'
-                },
-                {
-                    from: 25.25,
-                    to: 29.75,
-                    color: 'rgba(216, 216, 316, 1.0)'
-                }
-            ]
-            */
-            //,min: 0
+            minorTickLength: 0,
+            tickLength: 0,
+            labels: {
+                x: -15 // move left to accommodate border
+            }
         },
 
         tooltip: {
@@ -192,10 +141,10 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
             backgroundColor: 'rgba(255,255,255,0)',
             useHTML: true,
             formatter: function () {
-               var speed =  "<b>SPEED: </b>" + parseFloat(this.y).toFixed(2) + " mph";
-               var time =   "<b>&nbsp;&nbsp;TIME: </b>" + Highcharts.dateFormat('%H:%M:%S', this.x);
-               var tooltip =  '<div class="myTooltip" style="background-color:' + this.series.color + ';">' + speed + '<br/>' + time + '</div>';
-               return tooltip;
+                var speed = "<b>SPEED: </b>" + parseFloat(this.y).toFixed(2) + " mph";
+                var time = "<b>&nbsp;&nbsp;TIME: </b>" + Highcharts.dateFormat('%H:%M:%S', this.x);
+                var tooltip = '<div class="myTooltip" style="background-color:' + this.series.color + ';">' + speed + '<br/>' + time + '</div>';
+                return tooltip;
             }
         },
         plotOptions: {
@@ -227,10 +176,34 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
                                 marker.setPosition(new google.maps.LatLng(this.lat, this.lon));
                                 marker.setTitle(this.lon.currentPosition);
                             }
+
+                            // clean this up
+                            var _xaxis_y1 = chart.plotBox.y + chart.plotBox.height;
+                            var crosshair_height = 10;
+                            var crosshair_x = chart.xAxis[0].toPixels(this.x) - crosshair_height / 2;
+                            // TODO figure out how to make relative relative?
+                            chart.renderer.path(['M', crosshair_x, _xaxis_y1, 'L', crosshair_x + crosshair_height, _xaxis_y1, 'L', crosshair_x + crosshair_height / 2, _xaxis_y1 + crosshair_height, 'Z'])
+                                .attr({
+                                    fill: 'rgba(0,0,255,1.0)',
+                                    id: 'xAxisCrossHair'
+                                })
+                                .add();
+
+                            var _xaxis_x = chart.plotBox.x;
+                            var crosshair_y = chart.yAxis[0].toPixels(this.y) - crosshair_height / 2;
+                            chart.renderer.path(['M', _xaxis_x, crosshair_y, 'L', _xaxis_x, crosshair_y + crosshair_height, 'L', _xaxis_x - crosshair_height, crosshair_y + crosshair_height / 2, 'Z'])
+                                .attr({
+                                    fill: 'rgba(0,0,255,1.0)',
+                                    id: 'yAxisCrossHair'
+                                })
+                                .add();
+
                         },
                         mouseOut: function () {
                             // debug console.log('mouseOut - point');
                             // TODO remove marker?
+                            $("#xAxisCrossHair").remove();
+                            $("#yAxisCrossHair").remove();
                         }
                     }
                 },
@@ -252,27 +225,23 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
         series: seriesdata
     });
 
-/*    var grey = [
-        'rgba(168, 168, 168, 1.0)',
-        'rgba(184, 184, 184, 1.0)',
-        'rgba(200, 200, 200, 1.0)',
-        'rgba(216, 216, 216, 1.0)'
-    ];*/
     var grey = [
         'rgba(158, 158, 158, 1.0)',
         'rgba(174, 174, 174, 1.0)',
         'rgba(210, 210, 210, 1.0)',
         'rgba(232, 232, 232, 1.0)'
     ];
+
+    // yaxis plotlines and gradient
     var maxTick = chart.yAxis[0].tickPositions[chart.yAxis[0].tickAmount - 1];
-    for ( var i = 0; i < 8; i++) {
-        var tuple = i/8;
-        var _value =  maxTick * (i / 8);
+    for (var i = 0; i <= 8; i++) {
+        var tuple = i / 8;
+        var _value = maxTick * (i / 8);
         var _color = 'rgba(255, 255, 255, 0.8)';
         var _width = 2.5;
-        if (i%2) {
-            console.log(i);
-            var _color = grey[(i-1)/2];
+        if (i % 2) {
+            //console.log(i);
+            var _color = grey[(i - 1) / 2];
             var _width = 20;
         }
         chart.yAxis[0].addPlotLine({
@@ -283,7 +252,15 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
         });
     }
 
-    for ( var i = 0; i < chart.xAxis[0].tickPositions.length; i++) {
+    // xaxis plotlines
+    chart.xAxis[0].addPlotLine({
+        value: chart.xAxis[0].min,
+        width: 2.5,
+        color: 'rgba(255, 255, 255, 0.8)',
+        zIndex: 1
+    });
+
+    for (var i = 0; i <= chart.xAxis[0].tickPositions.length; i++) {
         chart.xAxis[0].addPlotLine({
             value: chart.xAxis[0].tickPositions[i],
             width: 2.5,
@@ -291,5 +268,87 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
             zIndex: 1
         });
     }
+
+
+    // add styled xaxis
+    var xaxis_x1 = chart.plotBox.x;
+    var xaxis_y1 = chart.plotBox.y + chart.plotBox.height + 5; // odd, 5 is half the stroke-width
+    var xaxis_x2 = xaxis_x1 + chart.plotBox.width;
+
+    // add the first segment for the xAxis style
+    var stroke_width = 10;
+    var tickDivisions = 6;
+    var tickPixel0 = chart.xAxis[0].toPixels(chart.xAxis[0].tickPositions[0]);
+    var tickPixel1 = chart.xAxis[0].toPixels(chart.xAxis[0].tickPositions[1]);
+    var tickPixelDelta = (tickPixel1 - tickPixel0) / tickDivisions;
+    var stroke_dasharray = tickPixelDelta + ',' + tickPixelDelta;
+
+    // cheat for the first segment
+    // N.B.!!! This is is drawing right to left
+    chart.renderer.path(['M', tickPixel0, xaxis_y1, 'L', xaxis_x1, xaxis_y1])
+        .attr({
+            'stroke-width': stroke_width,
+            stroke: 'lightgrey',
+            'stroke-dasharray': stroke_dasharray
+        })
+        .add();
+
+    chart.renderer.path(['M', tickPixel0 - tickPixelDelta , xaxis_y1, 'L', xaxis_x1, xaxis_y1])
+        .attr({
+            'stroke-width': stroke_width,
+            stroke: 'grey',
+            'stroke-dasharray': stroke_dasharray
+        })
+        .add();
+
+
+    // after the first plotline
+    chart.renderer.path(['M', tickPixel0, xaxis_y1, 'L', xaxis_x2, xaxis_y1])
+        .attr({
+            'stroke-width': stroke_width,
+            stroke: 'grey',
+            'stroke-dasharray': stroke_dasharray
+        })
+        .add();
+
+    chart.renderer.path(['M', tickPixel0 + tickPixelDelta, xaxis_y1, 'L', xaxis_x2, xaxis_y1])
+        .attr({
+            'stroke-width': stroke_width,
+            stroke: 'lightgrey',
+            'stroke-dasharray': stroke_dasharray
+        })
+        .add();
+
+
+    //
+    // add styled yaxis
+    //
+    tickDivisions = 2;
+    tickPixel0 = chart.yAxis[0].toPixels(chart.yAxis[0].tickPositions[0]);
+    tickPixel1 = chart.yAxis[0].toPixels(chart.yAxis[0].tickPositions[1]);
+    tickPixelDelta = (tickPixel0 - tickPixel1) / tickDivisions;
+    stroke_dasharray = tickPixelDelta + ',' + tickPixelDelta;
+    console.log(stroke_dasharray);
+
+    var yaxis_x1 = chart.plotBox.x - 5;
+    var yaxis_y1 = chart.plotBox.y + chart.plotBox.height;
+    var yaxis_y2 = chart.plotBox.y;
+    chart.renderer.path(['M', yaxis_x1, yaxis_y1, 'L', yaxis_x1, yaxis_y2])
+        .attr({
+            'stroke-width': stroke_width,
+            stroke: 'lightgrey',
+            'stroke-dasharray': stroke_dasharray
+        })
+        .add();
+
+
+    chart.renderer.path(['M', yaxis_x1, yaxis_y1 - tickPixelDelta, 'L', yaxis_x1, yaxis_y2])
+        .attr({
+            'stroke-width': stroke_width,
+            stroke: 'grey',
+            'stroke-dasharray': stroke_dasharray
+        })
+        .add();
+
 
 }
