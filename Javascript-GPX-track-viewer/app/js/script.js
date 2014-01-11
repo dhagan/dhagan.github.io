@@ -1,4 +1,4 @@
-var ajaxTestURL; // = 'eight_ball_150.gpx'; //'eight_ball_150.gpx'
+var ajaxTestURL = 'eight_ball_150.gpx';
 var draw_profile = false;
 
 
@@ -16,7 +16,7 @@ function set_feature(bool, id, callback) {
 }
 
 // clone of the initDrop(), for testing
-function ajax_parse_gpx(parser, updateLayout, droppedFileContent, map) {
+function ajax_parse_gpx(parser, droppedFileContent, map) {
     var profilevis;
 
     // $('#dropalert').remove();
@@ -27,6 +27,7 @@ function ajax_parse_gpx(parser, updateLayout, droppedFileContent, map) {
     // decide to draw stuff:
     if (gpxData.tracks.length == 0) {
         draw_profile = false;
+        alert("This gpx files appears to have no trackpoints.  No chart or metadata will be displayed.");
     } else {
         draw_profile = true;
     }
@@ -36,10 +37,12 @@ function ajax_parse_gpx(parser, updateLayout, droppedFileContent, map) {
         if (draw_profile) {
             $('#promo').css("display","block");
             $('#statuswell').css("display","block");
+            $('#malikoplayback').css("display","block");
+            $('#start').css("display","block");
+            $('#finish').css("display","block");
             $('#profilebackground').css("display","block");
         }
     });
-    updateLayout();
 
     parser.DrawGpx(gpxData, true, true);
     if (draw_profile)
@@ -48,20 +51,35 @@ function ajax_parse_gpx(parser, updateLayout, droppedFileContent, map) {
 
 
 $(document).ready(function () {
-    var updateLayout = function () {
-        // height
-        //var height = $(window).height();
-        //var profileHeight = draw_profile ? $('#profilegraph').height() : 0;
-        // DJH why ? // $('#mapwrapper').height(height - profileHeight);
-    };
+
+    $( "#loadButton" ).click(function() {
+       //console.log("loadButton called");
+        if(window.top==window) {
+            // you're not in a frame so you reload the site
+           // window.setTimeout('location.reload()', 3000); //reloads after 3 seconds
+            location.reload();
+        } else {
+            //you're inside a frame, so you stop reloading
+        }
+    });
+
+
+//    var speedramp = [
+//        {value: 0, color: '#0000FF'},
+//        {value: 20, color: '#FF0000'},
+//        {value: 30, color: '#FF8000'},
+//        {value: 40, color: '#FFFF00'},
+//        {value: 60, color: '#00FF00'}
+//    ];
 
     var speedramp = [
-        {value: 0, color: '#0000FF'},
-        {value: 20, color: '#FF0000'},
-        {value: 30, color: '#FF8000'},
-        {value: 40, color: '#FFFF00'},
-        {value: 60, color: '#00FF00'}
+        {value: 0, color: '#fdbc11'},
+        {value: 20, color: '#fdbc11'},
+        {value: 30, color: '#fdbc11'},
+        {value: 40, color: '#fdbc11'},
+        {value: 60, color: '#fdbc11'}
     ];
+
 
     writeLegend(speedramp);
 
@@ -76,19 +94,22 @@ $(document).ready(function () {
             async: false,
             success: function (text) {
                 $('#dropalert').remove();
-                ajax_parse_gpx(parser, updateLayout, text, map);
+                ajax_parse_gpx(parser, text, map);
             }
         });
+        $('#fileName').text(ajaxTestURL);
     } else {
         $('body').initDrop(function (droppedFileContent, filename) {
             $('#dropalert').remove();
             document.title = 'Maliko Playback: ' + filename;
-
+            $('#fileName').text(filename);
             var gpxData = parser.ParseGpx(droppedFileContent);
 
             // decide to draw stuff:
             if (gpxData.tracks.length == 0) {
                 draw_profile = false;
+                alert("This gpx files appears to have no trackpoints.  No chart or metadata will be displayed.");
+                $('#profilegraph').css("display","none");
             } else {
                 draw_profile = true;
             }
@@ -98,24 +119,18 @@ $(document).ready(function () {
                 if (draw_profile) {
                     $('#promo').css("display","block");
                     $('#statuswell').css("display","block");
+                    $('#malikoplayback').css("display","block");
+                    $('#start').css("display","block");
+                    $('#finish').css("display","block");
                     $('#profilebackground').css("display","block");
                 }
             });
-            updateLayout();
 
             parser.DrawGpx(gpxData, true, true);
             if (draw_profile)
                 profilevis.drawGpx(gpxData, map);
         });
     }
-    // layout
-    var resizeTimer = null;
-    $(window).bind('resize', function () {
-        //if (resizeTimer) clearTimeout(resizeTimer);
-        //resizeTimer = setTimeout(updateLayout, 50);
-        updateLayout();
-    });
-
 });
 
 function writeLegend(ramp) {
@@ -151,17 +166,6 @@ function createParser(map, speedramp) {
                 }
                 return colorFromRamp(speedramp, p2.spd);
                 break;
-            case 'slope':
-            /*
-             if (p2.elediff != p2.elediff
-             || p2.dst != p2.dst
-             ) { // aka not a number
-             return '#FF00FF';
-             }
-             var angle = Math.atan2(p2.elediff, p2.dst * 1000) * 180 / Math.PI; // <-180 - 180>
-             return colorFromRamp(sloperamp, angle);
-             break;
-             */
             default:
                 return '#FF00FF';
                 break;

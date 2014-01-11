@@ -78,7 +78,6 @@
         }
 
 
-
     </style>
 </head>
 <body>
@@ -95,6 +94,7 @@
             </button>
             <a class="navbar-brand logo-nav" href="#"><img src="img/logo.png"></a>
         </div>
+        <!--
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#">Maliko Playback</a></li>
@@ -126,6 +126,7 @@
                 </form>
             </div>
         </div>
+        -->
         <!--/.nav-collapse -->
     </div>
 </div>
@@ -150,14 +151,23 @@
                 </p>
             </div>
         </div>
-        <a id="promo" href="http://www.jugger.com">
-        </a>
-
+        <!--
+        <a id="promo" href="http://www.jugger.com"></a>
+        -->
+        <div id="malikoplayback">
+            <span style="color: #0097cd;">maliko</span> <span>PLAYBACK</span>
+       </div>
         <div id="profilebackground"></div>
 
         <div id="statuswell" class="statuswell">
-            <div class="child classleft" style="width: 300px;">
-                <div class="grandchild grandchildleft">eight_ball.gpx</div>
+            <div class="child classleft">
+                <div id="fileName" class="grandchild grandchildleft">eight_ball.gpx</div>
+            </div>
+            <div class="child classleft classleft1">
+                <div class="grandchild grandchildleft">|</div>
+            </div>
+            <div class="child classleft classleft2">
+                <div id="loadButton" class="grandchild grandchildleft">Load New File</div>
             </div>
             <div class="child classmiddle">
                 <div class="grandchild20">DIST:</div>
@@ -184,6 +194,9 @@
                 <div class="grandchild10">12.2 mph&nbsp;&nbsp;</div>
             </div>
         </div>
+
+        <div id="start">START</div>
+        <div id="finish">FINISH</div>
 
         <div id="profilegraph" style="background-color: transparent;"></div>
     </div>

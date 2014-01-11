@@ -321,9 +321,18 @@ GPXParser.prototype._drawRoute = function (route, color, trackwidth) {
 }
 
 GPXParser.prototype._drawWaypoint = function (waypoint) {
-    var marker = new google.maps.Marker(new google.maps.LatLng(waypoint.lat, waypoint.lon));
-    GEvent.addListener(marker, "click", function () {
-        marker.openInfoWindowHtml(waypoint.html);
+
+    var infowindow = new google.maps.InfoWindow({
+        content: waypoint.html
+    });
+
+    var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(waypoint.lat, waypoint.lon),
+        map: this.map
+    });
+
+    google.maps.event.addListener(marker, 'click', function() {
+        infowindow.open(this.map, marker);
     });
 
     this._addOverlay(marker);
@@ -430,7 +439,25 @@ GPXParser.prototype._centerAndZoom = function (gpxdata) {
 
     var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(minlat, minlon), new google.maps.LatLng(maxlat, maxlon));
 
-    this.map.setCenter(new google.maps.LatLng(centerlat, centerlon));
+    var _center = new google.maps.LatLng(centerlat, centerlon);
+    this.map.setCenter(_center);
+
+    /*
+    // TODO map.getProjection() not available until map is laoded
+    //http://stackoverflow.com/questions/3473367/how-to-offset-the-center-of-a-google-maps-api-v3-in-pixels
+    // http://stackoverflow.com/questions/10656743/how-to-offset-the-center-point-in-google-maps-api-v3
+    var offsetx = 0;
+    var offsety = -200;
+    var point1 = _center;
+    var point2 = new google.maps.Point(
+        ( (typeof(offsetx) == 'number' ? offsetx : 0) / Math.pow(2, map.getZoom()) ) || 0,
+        ( (typeof(offsety) == 'number' ? offsety : 0) / Math.pow(2, map.getZoom()) ) || 0
+    );
+    map.setCenter(map.getProjection().fromPointToLatLng(new google.maps.Point(
+        point1.x - point2.x,
+        point1.y + point2.y
+    )));
+ */
     this.map.fitBounds(bounds);
 }
 
@@ -443,8 +470,8 @@ GPXParser.prototype._addOverlay = function (marker) {
 
 GPXParser.prototype._clearMarkers = function () {
     for (var i = 0; i < this.markers.length; i++) {
-        if (this.markers[i].setMap != undefined)
-            this.markers[i].setMap(null);
+       if (this.markers[i].setMap != undefined)
+          this.markers[i].setMap(null);
 
         if (this.markers[i].remove != undefined)
             this.markers[i].remove();
