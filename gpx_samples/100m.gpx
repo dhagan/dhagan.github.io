@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<gpx version="1.0" creator="GPS Action Replay" xmlns="http://www.topografix.com/GPX/1/0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd">
+<wpt lat="45.69743" lon="-121.85780"><ele>0.0</ele><name>Finish 500m</name></wpt>
+<wpt lat="45.69797" lon="-121.85869"><ele>0.0</ele><name>Start 500m</name></wpt>
+<trk>
+<name>ACTIVE LOG</name><trkseg></trkseg><color>-16711936</color></trk></gpx>

@@ -1,0 +1,17 @@
+<gpx version="1.0" creator="Velocitek - http://www.velocitek.com" d1p1:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd" xmlns:d1p1="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.topografix.com/GPX/1/0">
+
+
+  <name>around_the_block_fromPC</name>
+  <time>2010-07-27T02:16:52.5015299Z</time>
+  <bounds minlat="20.9168243408203" minlon="-156.379241943359" maxlat="20.9184341430664" maxlon="-156.377182006836" />
+
+
+  <trk>
+    <name>around_the_block_fromPC</name>
+    <trkseg>
+      <trkpt lat="20.9176082611084" lon="-156.377243041992">
+        <time>2010-06-17T07:49:59Z</time>
+      </trkpt>      
+    </trkseg>
+  </trk>
+</gpx>

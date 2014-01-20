@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<gpx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" xmlns="http://www.topografix.com/GPX/1/1" creator="Velocitek - http://www.velocitek.com">
+    <metadata>
+        <name>Lahaina</name>
+        <desc>Marks used by Lahaina Yacht Club on 5/25/2008</desc>
+    </metadata>
+    <wpt lat="20.849655" lon="-156.687449">
+        <name>W</name>
+        <desc>Windward Mark</desc>
+    </wpt>
+    <wpt lat="20.855444" lon="-156.673326">
+        <name>Pin</name>
+        <desc>Pin End</desc>
+    </wpt>
+    <wpt lat="20.856393" lon="-156.673787">
+        <name>CB</name>
+        <desc>Committee Boat</desc>
+    </wpt>
+</gpx>

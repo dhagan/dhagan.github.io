@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<gpx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" xmlns="http://www.topografix.com/GPX/1/1" creator="Velocitek - http://www.velocitek.com">
+    <metadata>
+        <name>Howth Yacht Club Marks</name>
+        <desc />
+    </metadata>
+    <wpt lat="53.44600" lon="-6.05433">
+        <name>A</name>
+        <desc>Apex</desc>
+    </wpt>
+    <wpt lat="53.38833" lon="-6.05433">
+        <name>B</name>
+        <desc>Balscadden</desc>
+    </wpt>
+    <wpt lat="53.40833" lon="-6.09067">
+        <name>C</name>
+        <desc>Cush</desc>
+    </wpt>
+    <wpt lat="53.41217" lon="-6.06417">
+        <name>D</name>
+        <desc>Dunbo</desc>
+    </wpt>
+    <wpt lat="53.43333" lon="-6.03667">
+        <name>E</name>
+        <desc>East</desc>
+    </wpt>
+    <wpt lat="53.39500" lon="-6.06300">
+        <name>F</name>
+        <desc>Pier Finish</desc>
+    </wpt>
+    <wpt lat="53.41667" lon="-6.03867">
+        <name>G</name>
+        <desc>Garbh</desc>
+    </wpt>
+    <wpt lat="53.42850" lon="-6.07383">
+        <name>H</name>
+        <desc>Hub</desc>
+    </wpt>
+    <wpt lat="53.41167" lon="-6.07267">
+        <name>I</name>
+        <desc>Island</desc>
+    </wpt>
+    <wpt lat="53.39667" lon="-6.05667">
+        <name>J</name>
+        <desc>Thulla</desc>
+    </wpt>
+    <wpt lat="53.41000" lon="-6.05183">
+        <name>K</name>
+        <desc>Stack</desc>
+    </wpt>
+    <wpt lat="53.46650" lon="-6.05667">
+        <name>N</name>
+        <desc>North</desc>
+    </wpt>
+    <wpt lat="53.45383" lon="-6.09317">
+        <name>M</name>
+        <desc>Malahide</desc>
+    </wpt>
+    <wpt lat="53.42350" lon="-6.05867">
+        <name>O</name>
+        <desc>Osprey</desc>
+    </wpt>
+    <wpt lat="53.43150" lon="-6.10500">
+        <name>P</name>
+        <desc>Portmarnock</desc>
+    </wpt>
+    <wpt lat="53.39800" lon="-6.05367">
+        <name>Q</name>
+        <desc>Rowan Rocks</desc>
+    </wpt>
+    <wpt lat="53.45517" lon="-6.02167">
+        <name>T</name>
+        <desc>Talbot</desc>
+    </wpt>
+    <wpt lat="53.39633" lon="-6.06467">
+        <name>R</name>
+        <desc>South Rowan</desc>
+    </wpt>
+    <wpt lat="53.43700" lon="-6.08283">
+        <name>U</name>
+        <desc>Ulysses</desc>
+    </wpt>
+    <wpt lat="53.41867" lon="-6.07967">
+        <name>V</name>
+        <desc>Viceroy</desc>
+    </wpt>
+    <wpt lat="53.41600" lon="-6.10117">
+        <name>W</name>
+        <desc>West</desc>
+    </wpt>
+    <wpt lat="53.40200" lon="-6.07217">
+        <name>X</name>
+        <desc>Xebec</desc>
+    </wpt>
+    <rte>
+        <name>Race Area</name>
+        <rtept lat="53.47823" lon="-6.14479" />
+        <rtept lat="53.38517" lon="-6.14479" />
+        <rtept lat="53.38517" lon="-5.97896" />
+        <rtept lat="53.47823" lon="-5.97896" />
+        <rtept lat="53.47823" lon="-6.14479" />
+    </rte>
+</gpx>

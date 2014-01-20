@@ -31,55 +31,6 @@
     <!-- end bootstrap boiler plate -->
 
     <link href='css/style.css' rel='stylesheet' type='text/css'/>
-
-    <style>
-
-        body {
-            padding-top: 50px;
-            padding-bottom: 0px;
-        }
-
-        .navbar {
-            margin-bottom: 0px;
-        }
-
-        /* http://startbootstrap.com/logo-nav */
-        .nav {
-            margin-top: 0px; /* this is a faux center fix for the nav options -adjust this if you wish to change the logo height or the font of the menu items*/
-        }
-
-        .navbar-brand {
-            margin-left: 0px; /*DJH */
-            float: left;
-            padding: 0px 0px; /* overriding 15px 15px; */
-            font-size: 18px;
-            line-height: 20px;
-        }
-
-        /* Box-sizing resets
-         *
-         * Reset individual elements or override regions to avoid conflicts due to
-         * global box model settings of Bootstrap. Two options, individual overrides and
-         * region resets, are available as plain CSS and uncompiled LESS formats.
-         */
-
-        /* Option 1A: Override a single element's box model via CSS */
-        .element {
-            -webkit-box-sizing: content-box;
-            -moz-box-sizing: content-box;
-            box-sizing: content-box;
-        }
-
-        /* Option 1B: Override a single element's box model by using a Bootstrap LESS mixin */
-        .mapwrapper {
-            -webkit-box-sizing: content-box;
-            -moz-box-sizing: content-box;
-            box-sizing: content-box;
-        }
-
-
-
-    </style>
 </head>
 <body>
 
@@ -95,6 +46,7 @@
             </button>
             <a class="navbar-brand logo-nav" href="#"><img src="img/logo.png"></a>
         </div>
+        <!--
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#">Maliko Playback</a></li>
@@ -126,6 +78,7 @@
                 </form>
             </div>
         </div>
+        -->
         <!--/.nav-collapse -->
     </div>
 </div>
@@ -150,40 +103,55 @@
                 </p>
             </div>
         </div>
-        <a id="promo" href="http://www.jugger.com">
-        </a>
-
+        <!--
+        <a id="promo" href="http://www.jugger.com"></a>
+        -->
+        <div id="loading">
+            <img src="http://imageshack.us/a/img827/4092/ajaxloaderq.gif" />
+        </div>
+        <div id="malikoplayback">
+            <span style="color: #0097cd;">maliko</span> <span>PLAYBACK</span>
+        </div>
         <div id="profilebackground"></div>
 
         <div id="statuswell" class="statuswell">
-            <div class="child classleft" style="width: 300px;">
-                <div class="grandchild grandchildleft">eight_ball.gpx</div>
+            <div class="child classleft">
+                <div id="fileName" class="grandchild grandchildleft">eight_ball.gpx</div>
+            </div>
+            <div class="child classleft classleft1">
+                <div class="grandchild grandchildleft">|</div>
+            </div>
+            <div class="child classleft classleft2">
+                <div id="loadButton" class="grandchild grandchildleft">Load New File</div>
             </div>
             <div class="child classmiddle">
                 <div class="grandchild20">DIST:</div>
             </div>
             <div class="child classmiddle">
-                <div class="grandchild10">14.1 mi</div>
+                <div id="distance" class="grandchild10">14.1 mi</div>
             </div>
             <div class="child classmiddle">
                 <div class="grandchild20">TIME:</div>
             </div>
             <div class="child classmiddle">
-                <div class="grandchild10">02:30:12</div>
+                <div id="time" class="grandchild10">02:30:12</div>
             </div>
             <div class="child classmiddle">
                 <div class="grandchild20">AVG SPEED:</div>
             </div>
             <div class="child classmiddle">
-                <div class="grandchild10">5.46 mph</div>
+                <div id="speed" class="grandchild10">5.46 mph</div>
             </div>
             <div class="child classmiddle">
                 <div class="grandchild20">MAX SPEED:</div>
             </div>
             <div class="child classright">
-                <div class="grandchild10">12.2 mph&nbsp;&nbsp;</div>
+                <div id="maxSpeed" class="grandchild10">12.2 mph&nbsp;&nbsp;</div>
             </div>
         </div>
+
+        <div id="start">START</div>
+        <div id="finish">FINISH</div>
 
         <div id="profilegraph" style="background-color: transparent;"></div>
     </div>
@@ -200,6 +168,7 @@
 <script type="text/javascript" src="js/jquery.initDrop.js"></script>
 <script type="text/javascript" src="js/functional/functional.min.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript" src="js/regressionTest.js"></script>
 <script type="text/javascript" src="js/Highcharts-3.0.7/js/highcharts.js"></script>
 <script type="text/javascript" src="js/func.js"></script>
 <script type="text/javascript" src="js/gpxtools/color.js"></script>

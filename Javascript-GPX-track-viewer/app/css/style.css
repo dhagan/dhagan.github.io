@@ -1,7 +1,52 @@
+@font-face {
+    font-family: Unisect;
+    src: url(UNISB___.TTF) format("truetype");
+}
+
 html,
 body {
     width: 100%;
     height: 100%;
+    padding-top: 25px; /* DJH 1/16/2014 */
+    padding-bottom: 0px;
+}
+
+.navbar {
+    margin-bottom: 0px;
+}
+
+/* http://startbootstrap.com/logo-nav */
+.nav {
+    margin-top: 0px; /* this is a faux center fix for the nav options -adjust this if you wish to change the logo height or the font of the menu items*/
+}
+
+.navbar-brand {
+    margin-left: 0px; /*DJH */
+    float: left;
+    padding: 0px 0px; /* overriding 15px 15px; */
+    font-size: 18px;
+    line-height: 20px;
+}
+
+/* Box-sizing resets
+ *
+ * Reset individual elements or override regions to avoid conflicts due to
+ * global box model settings of Bootstrap. Two options, individual overrides and
+ * region resets, are available as plain CSS and uncompiled LESS formats.
+ */
+
+/* Option 1A: Override a single element's box model via CSS */
+.element {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+/* Option 1B: Override a single element's box model by using a Bootstrap LESS mixin */
+.mapwrapper {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
 }
 
 #wrapper {
@@ -11,6 +56,16 @@ body {
 
 .dropfocus {
     background: greenyellow;
+}
+
+#loading {
+    display: none;
+    position: absolute;
+    top: 100px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    background-color: transparent;
 }
 
 #mapwrapper {
@@ -24,104 +79,153 @@ body {
     height: 100%;
 }
 
-
 /* PROFILE */
 #profilegraph {
     /*display: none;*/
     background-color: transparent;
 }
 
+#start {
+    display: none;
+    position: absolute;
+    bottom: 160px;
+    left: 100px;
+    color: #808284;
+    font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 10px;
+    background-color: transparent;
+}
+
+#finish {
+    display: none;
+    position: absolute;
+    bottom: 160px;
+    right: 50px;
+    color: #808284;
+    font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 10px;
+    background-color: transparent;
+}
+
+#malikoplayback {
+    display: none;
+    position: absolute;
+    top: 20px;
+    left: 100px;
+    color: #939597;
+    font-family: "Unisect";
+    font-size: 20px;
+    background-color: transparent;
+}
+
 #statuswell {
     display: none;
-
     position: absolute;
     bottom: 180px;
-
-    border-radius: 8px;
-
+    border-radius: 10px; /* another cheat */
     height: 40px; /* cheat */
     left: 100px;
-    right: 40px;
-    background-color: #ffffff;
-
+    right: 50px;
+    background-color: #e7e7e8;
 }
 
 .child {
     /* border: 1px red solid; */
     height: 40px;
-    display:inline-block;
-    font-family:'Open Sans', sans-serif;
-    font-size: 10px;
+    display: inline-block;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
     font-weight: bold;
 }
+
 .classleft {
     border-left: 1px solid #808080;
     border-top: 1px solid #808080;
     border-bottom: 1px solid #808080;
     border-radius: 8px 0px 0px 8px;
-    background-color: #808080;
+    background-color: #808284;
     color: #ffffff;
     /* http://css-tricks.com/fighting-the-space-between-inline-block-elements/ */
     margin-right: -4px;
 }
-.classmiddle {
-    border-left: 1px solid #ffffff;
-    border-top: 1px solid #ffffff;
-    border-bottom: 1px solid #ffffff;
+
+.classleft1 {
     border-radius: 0px;
-    background-color: #ffffff;
-    color: #000000;
+}
+
+.classleft2 {
+    border-radius: 0px;
+    width: 200px;
+    color: #d2d2d4;
+    cursor: pointer;
+}
+
+.classleft2:hover {
+    border-radius: 0px;
+    width: 200px;
+    color: #ffffff;
+}
+
+.classmiddle {
+    border-left: 1px solid #e7e7e8;
+    border-top: 1px solid #e7e7e8;
+    border-bottom: 1px solid #e7e7e8;
+    border-radius: 0px;
+    background-color: #e7e7e8;
+    color: #58585b;
     /* http://css-tricks.com/fighting-the-space-between-inline-block-elements/ */
     margin-right: -4px;
 }
+
 .classright {
-    border-left: 1px solid #ffffff;
-    border-top: 1px solid #ffffff;
-    border-bottom: 1px solid #ffffff;
+    border-left: 1px solid #e7e7e8;
+    border-top: 1px solid #e7e7e8;
+    border-bottom: 1px solid #e7e7e8;
     border-radius: 0px 8px 8px 0px;
-    color: #000000;
-    background-color: #ffffff;
+    background-color: #e7e7e8;
+    color: #58585b;
 }
+
 .grandchild {
     /*border: 1px red solid;*/
     height: 40px;
     display: flex;
     /* http://stackoverflow.com/questions/5166574/vertical-align-text-in-block-element */
     align-items: center;
-    font-color: #ffffff;
     margin-left: 20px;
 }
+
 .grandchild20 {
     /*border: 1px red solid;*/
     height: 40px;
     display: flex;
     /* http://stackoverflow.com/questions/5166574/vertical-align-text-in-block-element */
     align-items: center;
-    color: #808080;
     margin-left: 20px;
+    color: #a7a9ab;
 }
+
 .grandchild10 {
     /*border: 1px red solid;*/
     height: 40px;
     display: flex;
     /* http://stackoverflow.com/questions/5166574/vertical-align-text-in-block-element */
     align-items: center;
-    font-color: #ffffff;
     margin-left: 10px;
 }
+
 .grandchildleft {
     margin-left: 50px;
 }
 
 #profilebackground {
     display: none;
-
     position: absolute;
     bottom: 0px;
-
     height: 200px;
     width: 100%;
-
     background: rgba(256, 256, 256, 0.6);
 }
 

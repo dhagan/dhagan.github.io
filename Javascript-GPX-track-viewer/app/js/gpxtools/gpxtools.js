@@ -2,12 +2,12 @@ function GPXParser(map) {
     this.xmlDoc = null;
     this.map = map;
     //this.map.enableScrollWheelZoom();
-    this.trackcolor = "#ff00ff"; // red
+    this.trackcolor = "#fdbc11"; // DJH gold
     this.segmentcolorprovider = function (pnt1, pnt2) {
         return this.trackcolor;
     };
     this.trackwidth = 5;
-    this.routecolor = '#ff00ff';
+    this.routecolor = '#fdbc11'; // DJH gold
     this.routewidth = 3;
     this.mintrackpointdelta = 0.0; // in km
     this.maxtrackpointdelta = 30.0; // in km
@@ -141,8 +141,6 @@ GPXParser.prototype._parseSegment = function (segmentxml) {
 
     for (var i = 1; i < trackpoints.length; i++) {
         var pnt = this._parseTrackPoint(trackpoints[i], lastpnt);
-
-
         var dist = this._pntDistance(lastpnt, pnt);
         if (this.maxtrackpointdelta > 0
             && dist > this.maxtrackpointdelta) {
@@ -321,9 +319,18 @@ GPXParser.prototype._drawRoute = function (route, color, trackwidth) {
 }
 
 GPXParser.prototype._drawWaypoint = function (waypoint) {
-    var marker = new google.maps.Marker(new google.maps.LatLng(waypoint.lat, waypoint.lon));
-    GEvent.addListener(marker, "click", function () {
-        marker.openInfoWindowHtml(waypoint.html);
+
+    var infowindow = new google.maps.InfoWindow({
+        content: waypoint.html
+    });
+
+    var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(waypoint.lat, waypoint.lon),
+        map: this.map
+    });
+
+    google.maps.event.addListener(marker, 'click', function () {
+        infowindow.open(this.map, marker);
     });
 
     this._addOverlay(marker);
@@ -385,6 +392,12 @@ GPXParser.prototype._parseTrackPoint = function (trackpoint, lastpnt) {
         if (pnt.ele != undefined && lastpnt.ele != undefined)
             pnt.elediff = pnt.ele - lastpnt.ele;
     }
+
+    if (!isNaN(pnt.spd)) {
+        this.speed += pnt.spd;
+    }
+    if (!isNaN(pnt.dst))
+        this.distance += pnt.dst;
     return pnt;
 }
 
@@ -418,20 +431,56 @@ GPXParser.prototype._centerAndZoom = function (gpxdata) {
         func.map(route.points, this, updateBounds);
     });
 
-
     if ((minlat == maxlat) && (minlat == 0)) {
         this.map.setCenter(new google.maps.LatLng(49.327667, -122.942333));
         return;
     }
 
     // Center around the middle of the points
-    var centerlon = (maxlon + minlon) / 2;
-    var centerlat = (maxlat + minlat) / 2;
+    if (true) {
+        var centerlon = ((maxlon + minlon) / 2);
+        var centerlat = (maxlat + minlat) / 2;
 
-    var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(minlat, minlon), new google.maps.LatLng(maxlat, maxlon));
+        var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(minlat, minlon), new google.maps.LatLng(maxlat, maxlon));
+        var _center = new google.maps.LatLng(centerlat, centerlon);
+        this.map.setCenter(_center);
+        this.map.fitBounds(bounds);
+    } else {
 
-    this.map.setCenter(new google.maps.LatLng(centerlat, centerlon));
-    this.map.fitBounds(bounds);
+        var boundsMinLatLng = new google.maps.LatLng(minlat, minlon);
+        var boundMaxLatLng = new google.maps.LatLng(maxlat, maxlon);
+        var that = this;
+
+        google.maps.event.addListenerOnce(this.map, "projection_changed", function () {
+            map_recenter(that.map, boundsMinLatLng, boundMaxLatLng, 0, 20);
+        });
+
+        function map_recenter(map, boundsMinLatLng, boundMaxLatLng, offsetx, offsety) {
+
+            var point1 = map.getProjection().fromLatLngToPoint(
+                (boundsMinLatLng instanceof google.maps.LatLng) ? boundsMinLatLng : map.getCenter()
+            );
+            var point2 = new google.maps.Point(
+                ( (typeof(offsetx) == 'number' ? offsetx : 0) / Math.pow(2, map.getZoom()) ) || 0,
+                ( (typeof(offsety) == 'number' ? offsety : 0) / Math.pow(2, map.getZoom()) ) || 0
+            );
+
+            var center = new google.maps.LatLng(map.getProjection().fromPointToLatLng(point1), map.getProjection().fromPointToLatLng(point1));
+            map.setCenter(center);
+            /*
+             var bounds = new google.maps.LatLngBounds(map.getProjection().fromPointToLatLng(new google.maps.Point(
+             point1.x - point2.x,
+             point1.y + point2.y
+             )),
+             boundMaxLatLng);
+             */
+
+            var bounds = new google.maps.LatLngBounds(boundsMinLatLng, boundMaxLatLng);
+            map.fitBounds(bounds);
+
+        }
+    }
+
 }
 
 GPXParser.prototype._addOverlay = function (marker) {
