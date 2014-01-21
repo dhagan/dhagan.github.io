@@ -30,13 +30,17 @@ function doDraw(parser, droppedFileContent, map, filename) {
     }
     parser.DrawGpx(gpxData, true, true);
 
+    //console.log('map done');
+
     // and update containers
     set_feature(draw_profile, 'profilegraph', function (el) {
         profilevis = new ProfileVisualizer(el);
     });
+
     if (draw_profile) {
         draw_profile = profilevis.drawGpx(gpxData, map);
     }
+    //console.log('profile done');
 
     if (draw_profile) {
         $('#promo').css("display", "block");
@@ -86,7 +90,7 @@ $(document).ready(function () {
     var myURL = parseURL(location.href);
     if (myURL.params.testNumber != null) {
         testNumber = myURL.params.testNumber;
-        var testInterval = (myURL.params.testInterval == null ? 5000 : myURL.params.testInterval);
+        var testInterval = (myURL.params.testInterval == null ? 7500 : myURL.params.testInterval);
         setTimeout(function () {
                 window.location.assign("index.html?testNumber=" + testNumber);
             },

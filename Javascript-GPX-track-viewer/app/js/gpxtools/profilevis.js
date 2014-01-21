@@ -6,6 +6,7 @@ function ProfileVisualizer(jqelement) {
 
 ProfileVisualizer.prototype.drawGpx = function (gpxdata, map) {
     var series = [];
+    var trackCounter = 0;
     var segmentCounter = 0;
     var stats = {};  // starttime, endtime, speed, maxSpeed, distance
     stats.speed = 0;
@@ -13,6 +14,8 @@ ProfileVisualizer.prototype.drawGpx = function (gpxdata, map) {
     var that = this;
 
     func.map(gpxdata.tracks, this, function (track) {
+        //console.log('track count ' + trackCounter++);
+        segmentCounter = 0;
         func.map(track.segments, this, function (segment) {
             if (track.segments.length > 0 && track.segments[0].points.length > 0) {
                 var starttime = track.segments[0].points[0].time;
@@ -22,13 +25,20 @@ ProfileVisualizer.prototype.drawGpx = function (gpxdata, map) {
                 stats.distance = segment.length;
             }
 
+            var bufferSum = 0;
+            var bufferCnt = 0;
+            // set the sample rate - 1000 points per track
+            var sampleSize = Math.ceil(track.segments[segmentCounter].points.length/1000);
+
             var segmentdata = {
-                name: 'segment ' + ++segmentCounter,
+                name: 'Track ' + trackCounter + ' - Segment ' + ++segmentCounter,
                 data: []
             };
 
-            var bufferSum = 0;
-            var bufferCnt = 0;
+            // set the color of the series if it is 1
+            if(trackCounter == 1) {
+                segmentdata['color'] = '#0097cd';
+            }
 
             func.map(segment.points, this, function (point) {
                 if (point.ele != undefined) {
@@ -38,23 +48,24 @@ ProfileVisualizer.prototype.drawGpx = function (gpxdata, map) {
                         stats.maxSpeed = Math.max(stats.maxSpeed, point.spd);
                     }
 
-                    if (++bufferCnt == 5) {
-                        var speed = Math.round(bufferSum / 5);
+                    if (++bufferCnt == sampleSize) {
+                        var speed = Math.round(bufferSum / sampleSize);
                         var time = point.time - starttime;
                         if (!isNaN(time) && !isNaN(speed)) {
                             var _point = { x: time, y: speed, lat: point.lat, lon: point.lon};
                             segmentdata.data.push(_point);
                         }
-
                         bufferCnt = 0;
                         bufferSum = 0;
                     }
                 }
             });
+
             series.push(segmentdata);
             if (segment.points.length) {
                 stats.speed = stats.speed / segment.points.length;
             }
+            //console.log('segment length ' +  segment.points.length);
         });
     });
 
@@ -308,8 +319,8 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
                 },
                 // TODO investigate turboThreshold implications
                 // http://api.highcharts.com/highcharts#plotOptions.series.turboThreshold
-                turboThreshold: 0,
-                color: '#0097cd'
+                turboThreshold: 10000
+                //color: '#0097cd'
             }
 
 

@@ -139,7 +139,14 @@ GPXParser.prototype._parseSegment = function (segmentxml) {
     var lastpnt = this._parseTrackPoint(trackpoints[0]);
     segment.points.push(lastpnt);
 
+    // plot 1000 points per track
+    var sampleSize = Math.ceil(trackpoints.length/1000);
+    var bufCount = 0;
     for (var i = 1; i < trackpoints.length; i++) {
+        if ( bufCount++ != sampleSize) {
+            continue;
+        }
+        bufCount = 0;
         var pnt = this._parseTrackPoint(trackpoints[i], lastpnt);
         var dist = this._pntDistance(lastpnt, pnt);
         if (this.maxtrackpointdelta > 0

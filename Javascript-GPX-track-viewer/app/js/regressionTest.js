@@ -4,12 +4,31 @@
 
 
 var ajaxTestURLs = [
+    '../../gpx/arches.gpx',
+    '../../gpx/big.gpx',
+    // '../../gpx/BrianHead-Network.gpx', // not time data
+    '../../gpx/Domboshawa 1.gpx',
+    '../../gpx/FantasyIsland.gpx',
+    //'../../gpx/fells_loop.gpx',
+    '../../gpx/gps-log-023.gpx',
+    '../../gpx/gpx10.gpx',
+    '../../gpx/Hike Haleakala from Sliding Sands to Halemau%27u.gpx',
+    '../../gpx/hungarian MTBO race.gpx',
+    '../../gpx/MtKimball.gpx',
+    '../../gpx/one_segment.gpx',
+    '../../gpx/one_track.gpx',
+    //'../../gpx/routes.gpx',  // no track points
+    // '../../gpx/StarrPass-Network.gpx', // not points data
+    '../../gpx/tracks.gpx',
+    //'../../gpx/waypoints-olbersdorf.gpx', // no track points
+    //'../../gpx/waypoints.gpx',
+    '../../gpx/with_or_without_elev.gpx',
     //'../../gpx_samples/091023_094957.gpx',  // not fitting bounding box
     //'../../gpx_samples/100m.gpx',  // no time data
     //'../../gpx_samples/540.gpx', // no time data
     //'../../gpx_samples/540_060805_073422.gpx',  // http://www.highcharts.com/errors/15
     //'../../gpx_samples/Alba.gpx', // no time data
-    //'../../gpx_samples/All_Races.gpx', //  14MB - times out
+    '../../gpx_samples/All_Races.gpx', //  14MB - times out
     '../../gpx_samples/around_the_block.gpx',
     //'../../gpx_samples/around_the_block_fromPC.gpx',  // no time
     '../../gpx_samples/bike_060801_030444.gpx',
@@ -51,10 +70,10 @@ var ajaxTestURLs = [
     //'../../gpx_samples/ReplayArea.gpx', // no track points
     '../../gpx_samples/temporaryGpxFile.gpx',
     '../../gpx_samples/test33.gpx',
-    '../../gpx_samples/Trackpoints.gpx',
+    // '../../gpx_samples/Trackpoints.gpx',  // invalid gpx file - SaxCount.exe -v=always -n -s -f
     // '../../gpx_samples/Trophy Wife.gpx', // no time data
     '../../gpx_samples/Trophy Wife_060805_061754.gpx',
-    // '../../gpx_samples/USA 72.gpx', // no tiem data
+    // '../../gpx_samples/USA 72.gpx', // no time data
     '../../gpx_samples/USA72_060805_060827.gpx',
     '../../gpx_samples/vx40_300308_140_10_15_knots_BOR.gpx'];
 

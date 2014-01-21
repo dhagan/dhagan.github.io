@@ -30,6 +30,27 @@
 
     <!-- end bootstrap boiler plate -->
 
+    <!--
+    <style>
+        #panel {
+            display: relative;
+            height: 100px;
+            background-color: #aaaaaa;
+            padding: 10px;
+        }
+    </style>
+    <script>
+        $("#toggle").click(function() {
+            if ($('#panel').css('display') == 'block') {
+                var height = '-=' + $('#panel').height();
+            } else {
+                var height = '+=' + $('#panel').height();
+            }
+            $("#panel").slideToggle("slow");
+
+        });
+    </script>
+    -->
     <link href='css/style.css' rel='stylesheet' type='text/css'/>
 </head>
 <body>
@@ -105,6 +126,11 @@
         </div>
         <!--
         <a id="promo" href="http://www.jugger.com"></a>
+
+        <div id="bar">Bar with a <a href="#" id="toggle">button</a> to toggle the panel</div>
+        <div id="panel">
+            <p>Panel - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a mauris et nulla facilisis eleifend. Sed metus orci, vulputate sit amet malesuada id, luctus vestibulum lacus. Sed faucibus, nibh vel faucibus porta, lectus lacus suscipit metus, ut posuere nulla dolor porttitor erat. Nam iaculis dolor et est tristique scelerisque. Integer gravida scelerisque est, ut pellentesque sem facilisis in. Quisque felis elit, laoreet id sagittis non, sollicitudin vitae turpis. Pellentesque quis quam sed nibh sollicitudin porttitor non ac sapien. Cras luctus egestas urna, vitae bibendum enim malesuada ut. Nulla porta tempus mi vel consequat. Aenean scelerisque porttitor felis, id elementum erat porttitor eu. Mauris vitae elit non lorem malesuada viverra non ac eros.</p>
+        </div>
         -->
         <div id="loading">
             <img src="http://imageshack.us/a/img827/4092/ajaxloaderq.gif" />
@@ -154,6 +180,7 @@
         <div id="finish">FINISH</div>
 
         <div id="profilegraph" style="background-color: transparent;"></div>
+
     </div>
 </div>
 
