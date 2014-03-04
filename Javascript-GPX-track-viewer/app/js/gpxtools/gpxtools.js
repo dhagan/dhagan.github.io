@@ -293,7 +293,7 @@ GPXParser.prototype._drawSegment = function (segment, segmentcolorprovider, trac
                 path: linesegment,
                 strokeColor: color,
                 strokeOpacity: .7,
-                strokeWeight: 4,
+                strokeWeight: 2,
                 map: this.map
             });
             // DJH 11/26/2013 var polyline = new google.maps.Polyline(linesegment, color, trackwidth);

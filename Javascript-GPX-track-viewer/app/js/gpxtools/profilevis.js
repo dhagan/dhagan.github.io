@@ -1,4 +1,5 @@
 var chart;
+var firstTime = true;
 
 function ProfileVisualizer(jqelement) {
     this.jqelement = jqelement;
@@ -159,6 +160,7 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
             backgroundColor: 'rgba(255, 255, 255, 0.0)',
             events: {
                 redraw: function () {
+                    console.log('chart.redraw()');
                     renderPlotLines(this);
                 },
                 load: function (event) {
@@ -167,6 +169,17 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
                 }
             }
         },
+        colors: [
+            '#0097cd', // '#4572A7', // DJH this is custom 1/28/2014
+            '#AA4643',
+            '#89A54E',
+            '#80699B',
+            '#3D96AE',
+            '#DB843D',
+            '#92A8CD',
+            '#A47D7C',
+            '#B5CA92'
+        ],
         title: {
             text: ''
         },
@@ -235,7 +248,7 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
         },
 
         tooltip: {
-            crosshairs: true,
+            crosshairs: false,
             shared: false,
             useHTML: true,
             borderWidth: 0,
@@ -335,6 +348,10 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
     //
     //
     function renderPlotLines(chart) {
+
+        $("#xAxisDark").remove();
+        $("#xAxisLight").remove();
+
         var grey = [
             'rgba(234, 235, 236, 1.0)',
             'rgba(241, 241, 242, 1.0)',
@@ -356,6 +373,10 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
                 var _width = 21.0;
             }
 
+            if (i==8) {
+                _witth = 0;
+            }
+
             //console.log ( _value, _width, _color);
             chart.yAxis[0].addPlotLine({
                 value: _value,
@@ -374,10 +395,16 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
         });
 
         for (var i = 0; i <= chart.xAxis[0].tickPositions.length; i++) {
+            var _width = 2.5;
+            var _color =  'rgba(255, 255, 255, 0.8)';
+            if (i == chart.xAxis[0].tickPositions.length - 1) {
+                _width = 1;
+                //_color =  'rgba(255, 0, 0, 0.8)';
+            }
             chart.xAxis[0].addPlotLine({
                 value: chart.xAxis[0].tickPositions[i],
-                width: 2.5,
-                color: 'rgba(255, 255, 255, 0.8)',
+                width: _width,
+                color: _color,
                 zIndex: 1
             });
         }
@@ -394,10 +421,12 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
         var tickPixel1 = chart.xAxis[0].toPixels(chart.xAxis[0].tickPositions[1]);
         var tickPixelDelta = (tickPixel1 - tickPixel0) / tickDivisions;
         var stroke_dasharray = tickPixelDelta + ',' + tickPixelDelta;
+        var cheat = 6; // account for plotlines (white)
 
         // after the first plotline
         chart.renderer.path(['M', tickPixel0, xaxis_y1, 'L', xaxis_x2, xaxis_y1])
             .attr({
+                'id': 'xAxisLight',
                 'stroke-width': stroke_width,
                 stroke: '#d1d2d4', //'lightgrey',
                 'stroke-dasharray': stroke_dasharray
@@ -406,6 +435,7 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
 
         chart.renderer.path(['M', tickPixel0 + tickPixelDelta, xaxis_y1, 'L', xaxis_x2, xaxis_y1])
             .attr({
+                'id': 'xAxisDark',
                 'stroke-width': stroke_width,
                 stroke: '#939597', //'grey'
                 'stroke-dasharray': stroke_dasharray
@@ -446,22 +476,36 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
         // paint grey box under, d1d2d4, blue box at origin
         var blue_box_y = xaxis_y1 - 5;
 
+
         chart.renderer.path(['M', xaxis_x1, blue_box_y , 'L', xaxis_x1, blue_box_y + stroke_width, 'L', xaxis_x1 - stroke_width, blue_box_y + stroke_width, 'L', xaxis_x1 - stroke_width, blue_box_y, 'Z'])
             .attr({
                 fill: 'rgba(209,210,212, 1.0)', // #d1d2d4
                 id: 'blueBox1'
             })
             .add();
+
         chart.renderer.path(['M', xaxis_x1 - 2, blue_box_y + 2 , 'L', xaxis_x1 - 2, blue_box_y + stroke_width, 'L', xaxis_x1 - stroke_width, blue_box_y + stroke_width, 'L', xaxis_x1 - stroke_width, blue_box_y + 2, 'Z'])
             .attr({
                 fill: 'rgba(0,151,205, 1.0)',
                 id: 'blueBox'
             })
             .add();
+
+        chart.renderer.rect(xaxis_x1 -2, xaxis_y1 - 5, 2, 2, 0)
+            .attr({
+                fill: 'rgba(255,255,255, 1.0)', // #d1d2d4
+                id: 'whiteRect'
+            })
+            .add();
+
+
     }
 
     // initialize
     renderPlotLines(chart);
+    //console.log('trigger');
+    //$('#statuswell').resize();
+    chart.redraw();
 
 }
 

@@ -80,10 +80,6 @@ body {
 }
 
 /* PROFILE */
-#profilegraph {
-    /*display: none;*/
-    background-color: transparent;
-}
 
 #start {
     display: none;
@@ -101,7 +97,7 @@ body {
     display: none;
     position: absolute;
     bottom: 160px;
-    right: 50px;
+    right: 63px;  /* baffling, why is this not the same as profilegraph.right? 3/3/2014*/
     color: #808284;
     font-weight: bold;
     font-family: 'Open Sans', sans-serif;
@@ -127,9 +123,23 @@ body {
     border-radius: 10px; /* another cheat */
     height: 40px; /* cheat */
     left: 100px;
-    right: 50px;
+    right: 63px; /* baffling, why is this not the same as profilegraph.right? 3/3/2014*/
     background-color: #e7e7e8;
 }
+
+/*
+vertical bar (aka pipe) on the status bar
+*/
+
+#pipe {
+     position: absolute;
+     bottom: 187px;
+     height: 24px; /* cheat */
+     left: 350px;
+     background-color: #d2d2d4;
+     width: 2px;
+     opacity: 0.8;
+ }
 
 .child {
     /* border: 1px red solid; */
@@ -229,7 +239,7 @@ body {
     background: rgba(256, 256, 256, 0.6);
 }
 
-body.profilegraph #profilegraph {
+#profilegraph {
     display: block;
 
     position: absolute;
@@ -248,8 +258,6 @@ body.profilegraph #profilegraph {
     background: rgba(256, 256, 256, 0.5);
 }
 
-body.profilegraph #wrapper {
-}
 
 #dropalert {
     width: 60%;

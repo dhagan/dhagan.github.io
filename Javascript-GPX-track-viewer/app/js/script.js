@@ -160,6 +160,20 @@ $(document).ready(function () {
         $('#loading').hide();
     });
 
+
+    $( window ).resize(function() {
+       console.log('window.resize()');
+        // baffling, why is this not the same as profilegraph.right? 3/3/2014
+        $("#statuswell").css({"right":"50px"});
+        $("#finish").css({"right":"50px"});
+
+    });
+//
+//    $( '#statuswell' ).resize(function() {
+//        console.log('statuswell.resize()')
+//    });
+//
+//    $(window).resize();
 });
 
 function writeLegend(ramp) {
