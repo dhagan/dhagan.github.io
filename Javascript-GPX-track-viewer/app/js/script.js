@@ -1,4 +1,5 @@
 var draw_profile = false;
+var firstTime = true;
 
 // jQuery removeClass removes the css class
 // http://api.jquery.com/removeClass/
@@ -132,11 +133,18 @@ $(document).ready(function () {
         console.log('map idle');
     });
 
-    if (testNumber && testNumber >= ajaxTestURLs.length) {
+    if (testNumber >= ajaxTestURLs.length) {
         testNumber = 0;
     }
+
+    ajaxTestURL = '';
     if (testNumber) {
         ajaxTestURL = ajaxTestURLs[testNumber++];
+    } else {
+        if( firstTime) {
+            ajaxTestURL = '../../gpx_samples/eight_ball.gpx';
+            firstTime = false;
+        }
     }
 
     if (ajaxTestURL) {
@@ -168,12 +176,6 @@ $(document).ready(function () {
         $("#finish").css({"right":"50px"});
 
     });
-//
-//    $( '#statuswell' ).resize(function() {
-//        console.log('statuswell.resize()')
-//    });
-//
-//    $(window).resize();
 });
 
 function writeLegend(ramp) {
