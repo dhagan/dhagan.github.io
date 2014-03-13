@@ -1,5 +1,4 @@
 var chart;
-var firstTime = true;
 
 function ProfileVisualizer(jqelement) {
     this.jqelement = jqelement;
@@ -12,7 +11,6 @@ ProfileVisualizer.prototype.drawGpx = function (gpxdata, map) {
     var stats = {};  // starttime, endtime, speed, maxSpeed, distance
     stats.speed = 0;
     stats.maxSpeed = 0;
-    var that = this;
 
     func.map(gpxdata.tracks, this, function (track) {
         //console.log('track count ' + trackCounter++);
@@ -155,6 +153,7 @@ var initialMarkerIndex = 12;
 var firstMouseOver = true;
 ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
 
+    var that = this;
     this.jqelement.html('');
     chart = new Highcharts.Chart({
         chart: {
@@ -308,46 +307,21 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
                                 marker.setTitle(this.lon.currentPosition);
                             }
 
-                            //that._addCrosshairs(chart);
-                            // clean this up
-                            var _xaxis_y1 = chart.plotBox.y + chart.plotBox.height;
-                            var crosshair_height = 10;
-                            var crosshair_width = 20;
-                            var crosshair_x = chart.xAxis[0].toPixels(this.x) - crosshair_width / 2;
-                            // TODO figure out how to make relative relative?
-                            chart.renderer.path(['M', crosshair_x, _xaxis_y1, 'L', crosshair_x + crosshair_width, _xaxis_y1, 'L', crosshair_x + crosshair_width / 2, _xaxis_y1 + crosshair_height, 'Z'])
-                                .attr({
-                                    fill: 'rgba(0,151,205,1.0)',
-                                    id: 'xAxisCrossHair'
-                                })
-                                .add();
-
-                            var _xaxis_x = chart.plotBox.x;
-                            var crosshair_y = chart.yAxis[0].toPixels(this.y) - crosshair_width / 2;
-                            chart.renderer.path(['M', _xaxis_x, crosshair_y, 'L', _xaxis_x, crosshair_y + crosshair_width, 'L', _xaxis_x - crosshair_height, crosshair_y + crosshair_width / 2, 'Z'])
-                                .attr({
-                                    fill: 'rgba(0,151,205,1.0)',
-                                    id: 'yAxisCrossHair'
-                                })
-                                .add();
+                            var nearestLocation = {
+                                'x' : this.x,
+                                'y' : this.y
+                            };
+                            that._addCrossHairs(nearestLocation, this.index);
 
                         },
                         mouseOut: function () {
-                            // debug
-                            //console.log('mouseOut - point');
-                            // TODO remove marker?
-                            //that._removeCrossHairs();
-                            $("#xAxisCrossHair").remove();
-                            $("#yAxisCrossHair").remove();
-
+                            that._removeCrossHairs();
                         }
                     }
                 },
                 events: {
                     mouseOut: function () {
-                        // debug console.log('mouseOut - chart');
-                        //hoverMarker.setVisible(false);
-                        // TODO remove marker?
+                        that._removeCrossHairs();
                     }
                 },
                 // TODO investigate turboThreshold implications
@@ -542,9 +516,6 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
     }
     // initialize
     renderPlotLines(chart);
-    //console.log('trigger');
-    //$('#statuswell').resize();
-
 }
 
 ProfileVisualizer.prototype._addCrossHairs = function (nearestLocation, index) {
@@ -557,7 +528,7 @@ ProfileVisualizer.prototype._addCrossHairs = function (nearestLocation, index) {
     chart.renderer.path(['M', crosshair_x, _xaxis_y1, 'L', crosshair_x + crosshair_width, _xaxis_y1, 'L', crosshair_x + crosshair_width / 2, _xaxis_y1 + crosshair_height, 'Z'])
         .attr({
             fill: 'rgba(0,151,205,1.0)',
-            id: 'xAxisCrossHair1'
+            id: 'xAxisCrossHair'
         })
         .add();
 
@@ -566,7 +537,7 @@ ProfileVisualizer.prototype._addCrossHairs = function (nearestLocation, index) {
     chart.renderer.path(['M', _xaxis_x, crosshair_y, 'L', _xaxis_x, crosshair_y + crosshair_width, 'L', _xaxis_x - crosshair_height, crosshair_y + crosshair_width / 2, 'Z'])
         .attr({
             fill: 'rgba(0,151,205,1.0)',
-            id: 'yAxisCrossHair1'
+            id: 'yAxisCrossHair'
         })
         .add();
 
@@ -589,7 +560,7 @@ ProfileVisualizer.prototype._addCrossHairs = function (nearestLocation, index) {
      .add();
      */
     /*
-     not working :(
+     works but performance is horrible :(
      http://jsfiddle.net/jugal/zJZSx/
 
 
@@ -618,6 +589,6 @@ ProfileVisualizer.prototype._addCrossHairs = function (nearestLocation, index) {
 
 ProfileVisualizer.prototype._removeCrossHairs = function () {
     //console.log('_removeCrossHairs');
-    $("#xAxisCrossHair1").remove();
-    $("#yAxisCrossHair1").remove();
+    $("#xAxisCrossHair").remove();
+    $("#yAxisCrossHair").remove();
 }

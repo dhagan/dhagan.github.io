@@ -1,5 +1,4 @@
 var draw_profile = false;
-var firstTime = true;
 
 // jQuery removeClass removes the css class
 // http://api.jquery.com/removeClass/
@@ -87,7 +86,7 @@ function parseURL(url) {
 }
 
 $(document).ready(function () {
-    var testNumber, ajaxTestURL;
+    var testNumber, ajaxTestURL, enableLoad;
     var myURL = parseURL(location.href);
     if (myURL.params.testNumber != null) {
         testNumber = myURL.params.testNumber;
@@ -98,11 +97,14 @@ $(document).ready(function () {
             testInterval);
 
     }
+    if (myURL.params.enableLoad != null) {
+        enableLoad = myURL.params.enableLoad;
+    }
     $("#loadButton").click(function () {
         //console.log("loadButton called");
         if (window.top == window) {
             // you're not in a frame so you reload the site
-           location.reload();
+            window.location.assign("index.html?enableLoad=true");
         } else {
             //you're inside a frame, so you stop reloading
         }
@@ -137,15 +139,14 @@ $(document).ready(function () {
         testNumber = 0;
     }
 
-    ajaxTestURL = '';
+    if (!enableLoad) {
+        ajaxTestURL = '../../gpx_samples/eight_ball.gpx';
+    }
+
     if (testNumber) {
         ajaxTestURL = ajaxTestURLs[testNumber++];
-    } else {
-        if( firstTime) {
-            ajaxTestURL = '../../gpx_samples/eight_ball.gpx';
-            firstTime = false;
-        }
     }
+
 
     if (ajaxTestURL) {
         console.log(ajaxTestURL);
