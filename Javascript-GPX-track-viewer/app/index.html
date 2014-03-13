@@ -56,7 +56,9 @@
 <body>
 
 <!-- Fixed navbar -->
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<div class="navbar navbar-fixed-top" role="navigation" style="background-color: black;">
+    <a class="navbar-brand logo-nav" href="#" style="position: fixed; padding-top: 10px; left: 100px;"><img src="img/white_logo_200_wide.gif"></a>
+   <!--
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -65,9 +67,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand logo-nav" href="#"><img src="img/logo.png"></a>
-        </div>
-        <!--
+       </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#">Maliko Playback</a></li>
@@ -99,7 +99,7 @@
                 </form>
             </div>
         </div>
-        -->
+-->
         <!--/.nav-collapse -->
     </div>
 </div>
@@ -148,6 +148,9 @@
             <div class="child classleft classleft1">
                 <div class="grandchild grandchildleft">&nbsp;</div>
             </div>
+            <div class="child classleft classleft1">
+                <div id="pipe"></div>
+            </div>
             <div class="child classleft classleft2">
                 <div id="loadButton" class="grandchild grandchildleft">Load New File</div>
             </div>
@@ -177,9 +180,7 @@
             </div>
         </div>
 
-        <div id="pipe"></div>
-
-        <div id="start">START</div>
+        <div id="start" class="after-box">START</div>
         <div id="finish">FINISH</div>
 
 

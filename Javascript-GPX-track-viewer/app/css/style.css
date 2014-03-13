@@ -132,24 +132,22 @@ vertical bar (aka pipe) on the status bar
 */
 
 #pipe {
-     position: absolute;
-     bottom: 187px;
-     height: 24px; /* cheat */
-     left: 350px;
-     background-color: #d2d2d4;
-     width: 2px;
-     opacity: 0.8;
- }
-
+    height: 35px;
+    background-color: #d2d2d4;
+    width: 2px;
+    opacity: 0.8;
+    border-top:8px solid #808080;
+    border-bottom:8px solid #808080;
+}
 .child {
     /* border: 1px red solid; */
     height: 40px;
-    display: inline-block;
-    font-family: 'Open Sans', sans-serif;
+    /*display: inline-block;*/
+    float: left;
+    font-family:'Open Sans', sans-serif;
     font-size: 12px;
     font-weight: bold;
 }
-
 .classleft {
     border-left: 1px solid #808080;
     border-top: 1px solid #808080;
@@ -157,27 +155,21 @@ vertical bar (aka pipe) on the status bar
     border-radius: 8px 0px 0px 8px;
     background-color: #808284;
     color: #ffffff;
-    /* http://css-tricks.com/fighting-the-space-between-inline-block-elements/ */
-    margin-right: -4px;
 }
-
 .classleft1 {
     border-radius: 0px;
 }
-
 .classleft2 {
     border-radius: 0px;
     width: 200px;
     color: #d2d2d4;
     cursor: pointer;
 }
-
 .classleft2:hover {
     border-radius: 0px;
     width: 200px;
     color: #ffffff;
 }
-
 .classmiddle {
     border-left: 1px solid #e7e7e8;
     border-top: 1px solid #e7e7e8;
@@ -185,10 +177,7 @@ vertical bar (aka pipe) on the status bar
     border-radius: 0px;
     background-color: #e7e7e8;
     color: #58585b;
-    /* http://css-tricks.com/fighting-the-space-between-inline-block-elements/ */
-    margin-right: -4px;
 }
-
 .classright {
     border-left: 1px solid #e7e7e8;
     border-top: 1px solid #e7e7e8;
@@ -197,7 +186,6 @@ vertical bar (aka pipe) on the status bar
     background-color: #e7e7e8;
     color: #58585b;
 }
-
 .grandchild {
     /*border: 1px red solid;*/
     height: 40px;
@@ -206,7 +194,6 @@ vertical bar (aka pipe) on the status bar
     align-items: center;
     margin-left: 20px;
 }
-
 .grandchild20 {
     /*border: 1px red solid;*/
     height: 40px;
@@ -216,7 +203,6 @@ vertical bar (aka pipe) on the status bar
     margin-left: 20px;
     color: #a7a9ab;
 }
-
 .grandchild10 {
     /*border: 1px red solid;*/
     height: 40px;
@@ -225,9 +211,12 @@ vertical bar (aka pipe) on the status bar
     align-items: center;
     margin-left: 10px;
 }
-
 .grandchildleft {
     margin-left: 50px;
+}
+
+.after-box {
+    clear: left;
 }
 
 #profilebackground {
