@@ -11,6 +11,7 @@ ProfileVisualizer.prototype.drawGpx = function (gpxdata, map) {
     var stats = {};  // starttime, endtime, speed, maxSpeed, distance
     stats.speed = 0;
     stats.maxSpeed = 0;
+    that = this;
 
     func.map(gpxdata.tracks, this, function (track) {
         //console.log('track count ' + trackCounter++);
@@ -132,10 +133,13 @@ ProfileVisualizer.prototype.drawGpx = function (gpxdata, map) {
         marker.setPosition(new google.maps.LatLng(nearestLocation.lat, nearestLocation.lon));
         if (typeof nearestLocation != 'undefined') {
             chart.tooltip.refresh(chart.series[0].data[index]);
-            that._addCrossHairs(nearestLocation, index);
+            that._addCrossHairs(nearestLocation, index, true);
         }
     });
 
+    google.maps.event.addListener(marker, 'dragend', function (event) {
+        that._removeCrossHairs();
+    });
     if (series[0].data.length > 0) {
         this._chartSeries(series, marker);
         $('#distance').text(parseFloat(stats.distance).toFixed(2) + ' mi');
@@ -285,7 +289,7 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
                         mouseOver: function () {
                             //console.log(this.x, this.y, this.lat, this.lon);
                             //console.log('mouseOver');
-                            // clean up initial marker
+                            // clean up initial hint chart marker
                             if (firstMouseOver) {
                                 var p = chart.series[0].points[initialMarkerIndex];
                                 if (p) {
@@ -308,10 +312,10 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
                             }
 
                             var nearestLocation = {
-                                'x' : this.x,
-                                'y' : this.y
+                                'x': this.x,
+                                'y': this.y
                             };
-                            that._addCrossHairs(nearestLocation, this.index);
+                            that._addCrossHairs(nearestLocation, this.index, false);
 
                         },
                         mouseOut: function () {
@@ -321,6 +325,9 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
                 },
                 events: {
                     mouseOut: function () {
+                        that._removeCrossHairs();
+                    },
+                    mouseOver: function () {
                         that._removeCrossHairs();
                     }
                 },
@@ -518,13 +525,50 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
     renderPlotLines(chart);
 }
 
-ProfileVisualizer.prototype._addCrossHairs = function (nearestLocation, index) {
-    //console.log('_addCrossHairs');
+var lastMarkerIndex;
+
+ProfileVisualizer.prototype._addCrossHairs = function (nearestLocation, index, addChartMarker) {
+
+    if (addChartMarker) {
+        var p = chart.series[0].points[index];
+        p.update({
+            marker: {
+                enabled: true,
+                radius: 7,
+                lineColor: 'white',
+                lineWidth: 2
+            }
+        });
+        if (lastMarkerIndex) {
+            var p = chart.series[0].points[lastMarkerIndex];
+            p.update({
+                marker: {
+                    enabled: false
+                }
+            });
+        }
+
+        lastMarkerIndex = index;
+
+        // remove the hint chart marker
+        if (firstMouseOver) {
+            var p = chart.series[0].points[initialMarkerIndex];
+            if (p) {
+                p.update({
+                    marker: {
+                        enabled: false
+                    }
+                });
+                firstMouseOver = false;
+            }
+        }
+    }
+
     var _xaxis_y1 = chart.plotBox.y + chart.plotBox.height;
     var crosshair_height = 10;
     var crosshair_width = 20;
     var crosshair_x = chart.xAxis[0].toPixels(nearestLocation.x) - crosshair_width / 2;
-    // TODO figure out how to make relative relative?
+// TODO figure out how to make relative relative?
     chart.renderer.path(['M', crosshair_x, _xaxis_y1, 'L', crosshair_x + crosshair_width, _xaxis_y1, 'L', crosshair_x + crosshair_width / 2, _xaxis_y1 + crosshair_height, 'Z'])
         .attr({
             fill: 'rgba(0,151,205,1.0)',
@@ -562,27 +606,6 @@ ProfileVisualizer.prototype._addCrossHairs = function (nearestLocation, index) {
     /*
      works but performance is horrible :(
      http://jsfiddle.net/jugal/zJZSx/
-
-
-     var p = chart.series[0].points[index];
-     p.update({
-     marker: {
-     enabled: true,
-     radius: 5,
-     lineColor: 'white',
-     lineWidth: 1
-     }
-     });
-     if (lastMarkerIndex) {
-     var p = chart.series[0].points[lastMarkerIndex];
-     p.update({
-     marker: {
-     enabled: false
-     }
-     });
-     }
-
-     lastMarkerIndex = index;
      */
 
 }
