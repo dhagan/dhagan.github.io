@@ -138,6 +138,7 @@ ProfileVisualizer.prototype.drawGpx = function (gpxdata, map) {
     });
 
     google.maps.event.addListener(marker, 'dragend', function (event) {
+        chart.tooltip.hide();
         that._removeCrossHairs();
     });
     if (series[0].data.length > 0) {
@@ -316,7 +317,6 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
                                 'y': this.y
                             };
                             that._addCrossHairs(nearestLocation, this.index, false);
-
                         },
                         mouseOut: function () {
                             that._removeCrossHairs();
@@ -528,42 +528,6 @@ ProfileVisualizer.prototype._chartSeries = function (seriesdata, marker) {
 var lastMarkerIndex;
 
 ProfileVisualizer.prototype._addCrossHairs = function (nearestLocation, index, addChartMarker) {
-
-    if (addChartMarker) {
-        var p = chart.series[0].points[index];
-        p.update({
-            marker: {
-                enabled: true,
-                radius: 7,
-                lineColor: 'white',
-                lineWidth: 2
-            }
-        });
-        if (lastMarkerIndex) {
-            var p = chart.series[0].points[lastMarkerIndex];
-            p.update({
-                marker: {
-                    enabled: false
-                }
-            });
-        }
-
-        lastMarkerIndex = index;
-
-        // remove the hint chart marker
-        if (firstMouseOver) {
-            var p = chart.series[0].points[initialMarkerIndex];
-            if (p) {
-                p.update({
-                    marker: {
-                        enabled: false
-                    }
-                });
-                firstMouseOver = false;
-            }
-        }
-    }
-
     var _xaxis_y1 = chart.plotBox.y + chart.plotBox.height;
     var crosshair_height = 10;
     var crosshair_width = 20;
@@ -585,28 +549,32 @@ ProfileVisualizer.prototype._addCrossHairs = function (nearestLocation, index, a
         })
         .add();
 
-    /** this doesn't work because it's under teh chart
-     chart.renderer.circle(crosshair_x, 10, 8).attr({
-        fill: 'rgba(0,151,205,1.0)',
-        stroke: 'white',
-        'stroke-width': 2,
-        'stroke-width': 1
-    }).add();
+    if (addChartMarker) {
+        var radius = 7;
+        var charterMarkerX = chart.xAxis[0].toPixels(nearestLocation.x);
+        var charterMarkerY = chart.yAxis[0].toPixels(nearestLocation.y);
+        chart.renderer.circle(charterMarkerX, charterMarkerY, radius)
+            .attr({
+                fill: 'rgba(0,151,205,1.0)',
+                stroke: 'white',
+                'stroke-width': 2,
+                id: 'chartMarkerCircle',
+                zIndex: 400
+            })
+            .add();
 
-     console.log( crosshair_x, crosshair_y);
-     chart.renderer.circle(crosshair_x, crosshair_y, 8)
-     .attr( {
-            fill: 'rgba(0,151,205,1.0)',
-            stroke: 'white',
-            'stroke-width': 2,
-            id: 'chartMarkerCircle'
-        })
-     .add();
-     */
-    /*
-     works but performance is horrible :(
-     http://jsfiddle.net/jugal/zJZSx/
-     */
+        if (firstMouseOver) {
+            var p = chart.series[0].points[initialMarkerIndex];
+            if (p) {
+                p.update({
+                    marker: {
+                        enabled: false
+                    }
+                });
+                firstMouseOver = false;
+            }
+        }
+    }
 
 }
 
@@ -614,4 +582,5 @@ ProfileVisualizer.prototype._removeCrossHairs = function () {
     //console.log('_removeCrossHairs');
     $("#xAxisCrossHair").remove();
     $("#yAxisCrossHair").remove();
+    $("#chartMarkerCircle").remove();
 }
